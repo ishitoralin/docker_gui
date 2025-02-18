@@ -1,9 +1,12 @@
 <template>
-  <div class="loginBackGround">
-    121123
-    <CompTemplate></CompTemplate>
+  <div>
+    <button @click="go">gooo</button>
   </div>
 </template>
 <script setup>
-import CompTemplate from "@/components/CompTemplate.vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const go = () => {
+  router.push("/dashboard");
+};
 </script>

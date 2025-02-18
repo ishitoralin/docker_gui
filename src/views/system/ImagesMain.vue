@@ -1,11 +1,11 @@
 <template>
   <div>
     <h1>{{ router.path }}</h1>
-    <CompTemplate></CompTemplate>
+    <!-- <CompTemplate></CompTemplate> -->
   </div>
 </template>
 <script setup>
 import { useRoute } from "vue-router";
-import { CompTemplate } from "@/components/CompTemplate.vue";
+// import { CompTemplate } from "@/components/CompTemplate.vue";
 const router = useRoute();
 </script>
