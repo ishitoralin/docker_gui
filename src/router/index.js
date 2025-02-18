@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-const routes = [
+export const routes = [
   {
     path: '/',
     name: 'login',
@@ -16,6 +16,36 @@ const routes = [
         path: "/dashboard",
         name: "Dashboard",
         component: () => import("../views/system/DashboardPage.vue"),
+      },
+      {
+        icon: "bi bi-house",
+        path: "/containers",
+        name: "Containers",
+        component: () => import("../views/system/ContainersMain.vue"),
+      },
+      {
+        icon: "bi bi-house",
+        path: "/images",
+        name: "Images",
+        component: () => import("../views/system/ImagesMain.vue"),
+      },
+      {
+        icon: "bi bi-house",
+        path: "/networks",
+        name: "Networks",
+        component: () => import("../views/system/NetworksMain.vue"),
+      },
+      {
+        icon: "bi bi-house",
+        path: "/volumes",
+        name: "Volumes",
+        component: () => import("../views/system/VolumesMain.vue"),
+      },
+      {
+        icon: "bi bi-house",
+        path: "/settings",
+        name: "Settings",
+        component: () => import("../views/system/SettingsPage.vue"),
       },
     ]
   }

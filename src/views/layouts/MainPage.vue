@@ -24,7 +24,7 @@ import NavBar from "./NavBar.vue";
 .mainContainer {
   width: 100vw;
   height: 100vh;
-  background: var(--color-border);
+  background: var(--color-main);
   display: flex;
   align-items: flex-start;
   flex-direction: column;
@@ -33,7 +33,6 @@ import NavBar from "./NavBar.vue";
 .navBarArea {
   height: 10vh;
   width: 100%;
-  border: 1px solid red;
 }
 
 .bodyArea {
@@ -42,13 +41,11 @@ import NavBar from "./NavBar.vue";
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgb(50, 101, 121);
 }
 
 .sideBarArea {
   height: 100%;
   width: var(--width-sidebar);
-  border: 1px solid green;
 }
 
 .contentArea {
@@ -56,6 +53,5 @@ import NavBar from "./NavBar.vue";
   width: 100%;
   padding: 1vh 1vw;
   overflow-y: auto;
-  border: 1px solid rgb(72, 139, 72);
 }
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div class="loginBackGround">
+    121123
     <CompTemplate></CompTemplate>
   </div>
 </template>

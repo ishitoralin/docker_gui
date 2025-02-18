@@ -1,6 +1,12 @@
 <template>
-    <div class="">123</div>
+  <div class="card">
+    <div class="card-header">Quote</div>
+    <div class="card-body">
+      <blockquote class="blockquote mb-0">
+        
+      </blockquote>
+    </div>
+  </div>
 </template>
 <script setup>
-
 </script>
