@@ -25,6 +25,7 @@ import NavBar from "./NavBar.vue";
   width: 100vw;
   height: 100vh;
   background: var(--color-main);
+  /* background: linear-gradient(180deg, var(--color-dark), var(--color-main)); */
   display: flex;
   align-items: flex-start;
   flex-direction: column;
