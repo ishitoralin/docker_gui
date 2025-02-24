@@ -2,7 +2,11 @@
   <div>
     <CompTemplate :fields="fields">
       <template #body>
-        <HorizonTable :fields="tableFields" :items="tableItems"></HorizonTable>
+        <HorizonTable
+          :fields="tableFields"
+          :items="tableItems"
+          :options="options"
+        ></HorizonTable>
       </template>
     </CompTemplate>
   </div>
@@ -18,6 +22,19 @@ const fields = ref({
   tail: "hello",
 });
 
+const options = ref({
+  perPage: 10,
+  currentPage: 1,
+  dropdown: [
+    { key: 10, text: 10 },
+    { key: 20, text: 20 },
+    { key: 30, text: 30 },
+    { key: 40, text: 40 },
+    { key: 50, text: 50 },
+    { key: "all", text: "All" },
+  ],
+});
+
 const tableFields = ref([
   { key: "name", label: "name" },
   { key: "age", label: "age" },
@@ -30,6 +47,19 @@ const tableFields = ref([
 const tableItems = ref([
   { name: "neko1", age: 19, color: "white1" },
   { name: "neko2", age: 129, color: "white2" },
+  { name: "neko3", age: 139, color: "white3" },
+  { name: "neko3", age: 139, color: "white3" },
+  { name: "neko3", age: 139, color: "white3" },
+  { name: "neko3", age: 139, color: "white3" },
+  { name: "neko3", age: 139, color: "white3" },
+  { name: "neko3", age: 139, color: "white3" },
+  { name: "neko3", age: 139, color: "white3" },
+  { name: "neko3", age: 139, color: "white3" },
+  { name: "neko3", age: 139, color: "white3" },
+  { name: "neko3", age: 139, color: "white3" },
+  { name: "neko3", age: 139, color: "white3" },
+  { name: "neko3", age: 139, color: "white3" },
+  { name: "neko3", age: 139, color: "white3" },
   { name: "neko3", age: 139, color: "white3" },
 ]);
 </script>

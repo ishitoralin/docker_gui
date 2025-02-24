@@ -50,6 +50,7 @@ const props = defineProps({
 }
 
 .holder-icon {
+  margin: 10px 0;
   min-width: var(--font-exhuge);
   min-height: var(--font-exhuge);
   max-width: var(--font-exhuge);
@@ -58,7 +59,8 @@ const props = defineProps({
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--color-lightblue);
+  background-color: var(--color-dark);
+  color: var(--color-lightblue);
 }
 
 .holder-title {
