@@ -17,16 +17,23 @@
         </tr>
       </tbody>
     </table>
-    <PaginationComp
-      v-model:currentPage="currentPage"
-      v-model:totalPages="totalPages"
-    ></PaginationComp>
-    <DropdownsComp
-      :totalRows="totalRows"
-      :dropdownList="options.dropdown"
-      v-model:perPage="perPage"
-      v-model:currentPage="currentPage"
-    ></DropdownsComp>
+
+    <div class="d-flex mt-3 justify-content-center align-items-center">
+      <PaginationComp
+        v-if="options.paginationFunc"
+        v-model:currentPage="currentPage"
+        v-model:totalPages="totalPages"
+        class="ms-auto me-auto"
+      ></PaginationComp>
+
+      <DropdownsComp
+        v-if="options.dropdown"
+        :totalRows="totalRows"
+        :dropdownList="options.dropdown"
+        v-model:perPage="perPage"
+        v-model:currentPage="currentPage"
+      ></DropdownsComp>
+    </div>
   </div>
 </template>
 

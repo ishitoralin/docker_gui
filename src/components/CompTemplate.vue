@@ -1,5 +1,13 @@
 <template>
-  <div>
+  <div
+    class="mx-2"
+    :style="{
+      width: fields.width || '100%',
+      height: fields.height || '100%',
+      maxWidth: fields.maxWidth || '100%',
+      minWidth: fields.maxWidth || '100%',
+    }"
+  >
     <div class="card">
       <div class="card-header d-flex">
         <div v-if="fields.icon" class="holder-icon me-3">
@@ -13,7 +21,7 @@
         </div>
       </div>
       <div class="card-body">
-        <slot name="body">123</slot>
+        <slot name="body"></slot>
       </div>
     </div>
   </div>
@@ -35,6 +43,7 @@ const props = defineProps({
   background-color: var(--color-border);
   border: 1px solid var(--color-border);
   transition: 0.2s ease;
+  height: 100%;
 }
 
 .card:hover {

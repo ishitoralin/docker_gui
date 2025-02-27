@@ -1,74 +1,161 @@
 <template>
-  <div>
-    <CompTemplate :fields="fields">
-      <template #body>
-        <HorizonTable
-          :fields="tableFields"
-          :items="tableItems"
-          :options="options"
-        ></HorizonTable>
-      </template>
-    </CompTemplate>
+  <div class="container-fluid">
+    <div class="row">
+      <div
+        class="col-12 col-lg-6 d-flex justify-content-center align-items-center"
+      >
+        <CompTemplate :fields="dashboardFields['dashboardFields']">
+          <template #body>
+            <div class="bar-container">
+              <ChartJs :data="barData" :options="dashboardChart.barOptions" />
+            </div>
+          </template>
+        </CompTemplate>
+      </div>
+
+      <div
+        class="col-12 col-lg-6 d-flex justify-content-center align-items-center"
+      >
+        <CompTemplate :fields="dashboardFields.containersFields">
+          <template #body>
+            <div class="chart-container">
+              <ChartJs
+                :data="doughnutData"
+                :options="dashboardChart.doughNut"
+              />
+            </div>
+          </template>
+        </CompTemplate>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref, computed } from "vue";
+import DockerAPI from "@/models/dockerApi";
 import CompTemplate from "@/components/CompTemplate.vue";
-import HorizonTable from "@/components/HorizonTable.vue";
-const fields = ref({
-  icon: "bi-house",
-  title: "Dashboard",
-  tail: "hello",
+import ChartJs from "@/components/ChartJs.vue";
+import { dashboardChart } from "@/init/chartOptions";
+import { dashboardFields } from "@/init/fields";
+
+const barData = computed(() => {
+  const data = {
+    labels: ["Containers", "Images", "Networks", "Volumes"],
+    datasets: [
+      {
+        data: [
+          dockerInfo.value["Containers"],
+          dockerInfo.value["Images"],
+          networksInfo.value.length,
+          volumesInfo.value.length,
+        ],
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.2)",
+          "rgba(255, 205, 86, 0.2)",
+          "rgba(75, 192, 192, 0.2)",
+          "rgba(54, 162, 235, 0.2)",
+        ],
+        borderColor: [
+          "rgb(255, 99, 132)",
+          "rgb(255, 205, 86)",
+          "rgb(75, 192, 192)",
+          "rgb(54, 162, 235)",
+        ],
+        borderWidth: 1,
+        datalabels: {
+          display: false,
+        },
+        font: {
+          weight: "bold",
+          size: 14,
+        },
+      },
+    ],
+  };
+  return data;
 });
 
-const options = ref({
-  perPage: 10,
-  currentPage: 1,
-  dropdown: [
-    { key: 10, text: 10 },
-    { key: 20, text: 20 },
-    { key: 30, text: 30 },
-    { key: 40, text: 40 },
-    { key: 50, text: 50 },
-    { key: "all", text: "All" },
-  ],
+const doughnutData = computed(() => {
+  const data = {
+    labels: [`Running`, `Paused`, `Stopped`],
+    datasets: [
+      {
+        data: [
+          dockerInfo.value["ContainersRunning"],
+          dockerInfo.value["ContainersPaused"],
+          dockerInfo.value["ContainersStopped"],
+        ],
+        backgroundColor: [
+          "rgba(75, 192, 192, 0.2)",
+          "rgba(255, 205, 86, 0.2)",
+          "rgba(255, 99, 132, 0.2)",
+        ],
+        borderColor: [
+          "rgb(75, 192, 192)",
+          "rgb(255, 205, 86)",
+          "rgb(255, 99, 132)",
+        ],
+        datalabels: {
+          display: false,
+        },
+      },
+    ],
+  };
+  return data;
 });
 
-const tableFields = ref([
-  { key: "name", label: "name" },
-  { key: "age", label: "age" },
-  {
-    key: "color",
-    label: "color",
-  },
-]);
+const dockerInfo = ref({});
+const networksInfo = ref([]);
+const volumesInfo = ref([]);
 
-const tableItems = ref([
-  { name: "neko1", age: 19, color: "white1" },
-  { name: "neko2", age: 129, color: "white2" },
-  { name: "neko3", age: 139, color: "white3" },
-  { name: "neko3", age: 139, color: "white3" },
-  { name: "neko3", age: 139, color: "white3" },
-  { name: "neko3", age: 139, color: "white3" },
-  { name: "neko3", age: 139, color: "white3" },
-  { name: "neko3", age: 139, color: "white3" },
-  { name: "neko3", age: 139, color: "white3" },
-  { name: "neko3", age: 139, color: "white3" },
-  { name: "neko3", age: 139, color: "white3" },
-  { name: "neko3", age: 139, color: "white3" },
-  { name: "neko3", age: 139, color: "white3" },
-  { name: "neko3", age: 139, color: "white3" },
-  { name: "neko3", age: 139, color: "white3" },
-  { name: "neko3", age: 139, color: "white3" },
-]);
+const fetchInfo = async () => {
+  const response = await DockerAPI("getInfo");
+  dockerInfo.value = response.result;
+};
+
+const fetchNetworkList = async () => {
+  const response = await DockerAPI("getNetworkList");
+  networksInfo.value = response.result;
+};
+
+const fetchVolumeList = async () => {
+  const response = await DockerAPI("getVolumeList");
+  volumesInfo.value = response.result.Volumes;
+};
+
+onMounted(() => {
+  fetchInfo();
+  fetchNetworkList();
+  fetchVolumeList();
+});
 </script>
 
 <style scoped>
-.editor {
-  width: 100%;
-  height: 300px;
-  border: 1px solid #ccc;
-  background-color: white;
+.dashboard-container {
+  display: flex;
+}
+
+.bar-container {
+  height: 220px;
+  margin: auto;
+  overflow: hidden;
+}
+
+.chart-container {
+  width: 220px;
+  height: 220px;
+  margin: auto;
+  overflow: hidden;
+}
+
+.title {
+  height: 40px;
+  color: var(--color-white);
+  font-weight: bold;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 </style>

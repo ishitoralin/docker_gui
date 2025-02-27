@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown-center dropup ms-auto">
+  <div class="dropdown-center">
     <button
       class="btn dropdown-toggle custom-dropdown-button-style"
       type="button"
@@ -36,6 +36,7 @@ const currentPage = defineModel("currentPage");
 const target = ref(props.dropdownList[0].text);
 
 const handleChangePerPage = (key) => {
+  currentPage.value = 1;
   target.value = key;
   if (typeof key === "string") {
     perPage.value = props.totalRows;

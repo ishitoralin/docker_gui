@@ -1,5 +1,5 @@
 <template>
-  <nav class="mt-5" aria-label="Page navigation example">
+  <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
       <li :class="['page-item', currentPage === 1 ? 'disabled' : '']">
         <a
@@ -28,8 +28,21 @@
         </a>
       </li>
 
+      <li v-if="totalPages > 5 && currentPage > 3" :class="['page-item']">
+        <ol :class="['page-link', 'non-target-page', 'disabled']">
+          ‧ ‧ ‧
+        </ol>
+      </li>
       <template v-for="index in totalPages" :key="index">
-        <li :class="['page-item', currentPage === index ? 'active' : '']">
+        <li
+          v-if="
+            (index >= currentPage - 2 && index <= currentPage + 2) ||
+            (currentPage <= 2 && index <= 5) ||
+            (currentPage >= totalPages - 1 && index === currentPage - 4) ||
+            (currentPage === totalPages && index === totalPages - 5)
+          "
+          :class="['page-item', currentPage === index ? 'active' : '']"
+        >
           <a
             :class="[
               'page-link',
@@ -42,6 +55,15 @@
           </a>
         </li>
       </template>
+
+      <li
+        v-if="totalPages > 5 && totalPages - currentPage >= 3"
+        :class="['page-item']"
+      >
+        <ol :class="['page-link', 'non-target-page', 'disabled']">
+          ‧ ‧ ‧
+        </ol>
+      </li>
 
       <li :class="['page-item', currentPage === totalPages ? 'disabled' : '']">
         <a
@@ -109,9 +131,9 @@ const handleEnd = () => {
 
 <style scoped>
 .page-item .page-link {
-  background-color: transparent !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
 }
 
 .page-link:hover {
@@ -137,5 +159,14 @@ const handleEnd = () => {
 
 .not-active {
   color: var(--color-grey);
+}
+
+.page-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45px;
+  height: 35px;
+  white-space: nowrap;
 }
 </style>
