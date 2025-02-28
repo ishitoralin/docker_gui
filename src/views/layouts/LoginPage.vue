@@ -1,37 +1,46 @@
 <template>
-  <div>
-    <img v-if="imageUrl" class="img" :src="imageUrl" alt="動態圖片" />
-    <button @click="fetchImage">載入圖片</button>
+  <div class="login-container">
+    <SignupForm v-if="route.path === '/signup'"></SignupForm>
+    <ForgotForm v-else-if="route.path === '/forgot'"></ForgotForm>
+    <LoginForm v-else></LoginForm>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
 import axios from "axios";
-
-const imageUrl = ref("");
-
-const fetchImage = async () => {
-  try {
-    const url = "https://10.15.1.89:8443/api/v1/auths/otp";
-    const response = await axios.get(url);
-    const data = response.data;
-    if (data.image) {
-      imageUrl.value = data.image;
-    } else {
-      console.error("圖片資料不存在");
-    }
-  } catch (error) {
-    console.error("圖片載入失敗:", error);
-  }
-};
-
-onMounted(() => {
-  fetchImage();
-});
+import LoginForm from "@/components/LoginForm.vue";
+import ForgotForm from "@/components/ForgotForm.vue";
+import SignupForm from "@/components/SignupForm.vue";
+import { useRoute } from "vue-router";
+const route = useRoute();
+SignupForm;
 </script>
+
 <style scoped>
-.img {
-  filter: invert(9);
+.login-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("@/assets/login.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.login-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.login-container > * {
+  z-index: 2;
 }
 </style>

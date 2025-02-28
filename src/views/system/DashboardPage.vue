@@ -12,7 +12,17 @@
           </template>
         </CompTemplate>
       </div>
-
+      <div
+        class="col-12 col-lg-6 d-flex justify-content-center align-items-center"
+      >
+        <CompTemplate :fields="dashboardFields['dashboardFields']">
+          <template #body>
+            <div class="bar-container">
+              <ChartJs :data="barData" :options="dashboardChart.barOptions" />
+            </div>
+          </template>
+        </CompTemplate>
+      </div>
       <div
         class="col-12 col-lg-6 d-flex justify-content-center align-items-center"
       >

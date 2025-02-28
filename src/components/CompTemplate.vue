@@ -55,15 +55,15 @@ const props = defineProps({
 }
 
 .icon {
-  font-size: var(--font-large);
+  font-size: var(--font-l);
 }
 
 .holder-icon {
   margin: 10px 0;
-  min-width: var(--font-exhuge);
-  min-height: var(--font-exhuge);
-  max-width: var(--font-exhuge);
-  max-height: var(--font-exhuge);
+  min-width: var(--font-3l);
+  min-height: var(--font-3l);
+  max-width: var(--font-3l);
+  max-height: var(--font-3l);
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -76,7 +76,7 @@ const props = defineProps({
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: var(--font-large);
+  font-size: var(--font-l);
 }
 
 .holder-tail {

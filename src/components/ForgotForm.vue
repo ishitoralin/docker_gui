@@ -6,29 +6,7 @@
       :key="index"
       :fields="item"
     ></LoginFormInput>
-    <div class="options-container">
-      <div class="remember-container">
-        <input
-          class="form-check-input mt-0 me-1"
-          type="checkbox"
-          value=""
-          aria-label="Checkbox for following text input"
-        />
-        <span>Remember me</span>
-      </div>
-      <div>
-        <router-link
-          class="router-link-style"
-          to=""
-          @click.prevent="handleRouterSwitch('/forgot')"
-          >Forget password?</router-link
-        >
-      </div>
-    </div>
-    <LoginFormButton
-      :fields="btnFields"
-      @handleClick="handleClick"
-    ></LoginFormButton>
+    <LoginFormButton :fields="btnFields"></LoginFormButton>
     <div class="signup-container">
       <span class="me-1">Create a new account?</span>
       <router-link
@@ -36,6 +14,13 @@
         to=""
         @click.prevent="handleRouterSwitch('/signup')"
         >Sign up</router-link
+      >
+      or
+      <router-link
+        class="router-link-style"
+        to=""
+        @click.prevent="handleRouterSwitch('/')"
+        >Login?</router-link
       >
     </div>
   </div>
@@ -52,8 +37,9 @@ const router = useRouter();
 const handleRouterSwitch = (path) => {
   router.push(path);
 };
+
 const titleFields = ref({
-  title: "Login",
+  title: "Verify",
 });
 
 const inputFieldsGroup = ref([
@@ -63,20 +49,15 @@ const inputFieldsGroup = ref([
     icon: "bi-person",
   },
   {
-    type: "password",
-    placeholder: "Password",
-    icon: "bi-lock",
+    type: "text",
+    placeholder: "E-mail",
+    icon: "bi-envelope",
   },
 ]);
 
 const btnFields = ref({
-  key: "login",
-  text: "Login",
+  text: "Send",
 });
-
-const handleClick = (key) => {
-  router.push("/dashboard");
-};
 </script>
 
 <style scoped>
@@ -97,6 +78,10 @@ const handleClick = (key) => {
   border-radius: 20px;
 
   background-color: rgba(50, 50, 50, 0.5);
+}
+
+.card-title {
+  margin-bottom: 10px;
 }
 
 .options-container {

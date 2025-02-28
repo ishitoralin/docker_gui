@@ -6,36 +6,15 @@
       :key="index"
       :fields="item"
     ></LoginFormInput>
-    <div class="options-container">
-      <div class="remember-container">
-        <input
-          class="form-check-input mt-0 me-1"
-          type="checkbox"
-          value=""
-          aria-label="Checkbox for following text input"
-        />
-        <span>Remember me</span>
-      </div>
-      <div>
-        <router-link
-          class="router-link-style"
-          to=""
-          @click.prevent="handleRouterSwitch('/forgot')"
-          >Forget password?</router-link
-        >
-      </div>
-    </div>
-    <LoginFormButton
-      :fields="btnFields"
-      @handleClick="handleClick"
-    ></LoginFormButton>
+
+    <LoginFormButton :fields="btnFields"></LoginFormButton>
     <div class="signup-container">
-      <span class="me-1">Create a new account?</span>
+      <span class="me-1">Already have an account?</span>
       <router-link
         class="router-link-style"
         to=""
-        @click.prevent="handleRouterSwitch('/signup')"
-        >Sign up</router-link
+        @click.prevent="handleRouterSwitch('/')"
+        >Login</router-link
       >
     </div>
   </div>
@@ -52,8 +31,9 @@ const router = useRouter();
 const handleRouterSwitch = (path) => {
   router.push(path);
 };
+
 const titleFields = ref({
-  title: "Login",
+  title: "Sign Up",
 });
 
 const inputFieldsGroup = ref([
@@ -63,20 +43,25 @@ const inputFieldsGroup = ref([
     icon: "bi-person",
   },
   {
+    type: "text",
+    placeholder: "E-mail",
+    icon: "bi-envelope",
+  },
+  {
     type: "password",
     placeholder: "Password",
+    icon: "bi-lock",
+  },
+  {
+    type: "password",
+    placeholder: "Confirm password",
     icon: "bi-lock",
   },
 ]);
 
 const btnFields = ref({
-  key: "login",
-  text: "Login",
+  text: "Send",
 });
-
-const handleClick = (key) => {
-  router.push("/dashboard");
-};
 </script>
 
 <style scoped>
