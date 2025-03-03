@@ -14,7 +14,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import CompTemplate from "@/components/CompTemplate.vue";
-import HorizonTable from "@/components/HorizonTable.vue";
+import HorizonTable from "@/components/VerticalTable.vue";
 import DockerAPI from "@/models/dockerApi";
 const fields = ref({
   icon: "bi-house",

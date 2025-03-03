@@ -6,15 +6,36 @@
       :key="index"
       :fields="item"
     ></LoginFormInput>
-
-    <LoginFormButton :fields="btnFields"></LoginFormButton>
+    <div class="options-container">
+      <div class="remember-container">
+        <input
+          class="form-check-input mt-0 me-1"
+          type="checkbox"
+          value=""
+          aria-label="Checkbox for following text input"
+        />
+        <span>Remember me</span>
+      </div>
+      <div>
+        <router-link
+          class="router-link-style"
+          to=""
+          @click.prevent="handleRouterSwitch('/forgot')"
+          >Forget password?</router-link
+        >
+      </div>
+    </div>
+    <LoginFormButton
+      :fields="btnFields"
+      @handleClick="handleClick"
+    ></LoginFormButton>
     <div class="signup-container">
-      <span class="me-1">Already have an account?</span>
+      <span class="me-1">Create a new account?</span>
       <router-link
         class="router-link-style"
         to=""
-        @click.prevent="handleRouterSwitch('/')"
-        >Login</router-link
+        @click.prevent="handleRouterSwitch('/signup')"
+        >Sign up</router-link
       >
     </div>
   </div>
@@ -22,18 +43,17 @@
 
 <script setup>
 import { ref } from "vue";
-import LoginFormInput from "@/components/LoginFormInput.vue";
-import LoginFormButton from "@/components/LoginFormButton.vue";
-import LoginFormTitle from "@/components/LoginFormTitle.vue";
+import LoginFormInput from "@/components/LoginPage/LoginFormInput.vue";
+import LoginFormButton from "@/components/LoginPage/LoginFormButton.vue";
+import LoginFormTitle from "@/components/LoginPage/LoginFormTitle.vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 const handleRouterSwitch = (path) => {
   router.push(path);
 };
-
 const titleFields = ref({
-  title: "Sign Up",
+  title: "Login",
 });
 
 const inputFieldsGroup = ref([
@@ -43,25 +63,20 @@ const inputFieldsGroup = ref([
     icon: "bi-person",
   },
   {
-    type: "text",
-    placeholder: "E-mail",
-    icon: "bi-envelope",
-  },
-  {
     type: "password",
     placeholder: "Password",
-    icon: "bi-lock",
-  },
-  {
-    type: "password",
-    placeholder: "Confirm password",
     icon: "bi-lock",
   },
 ]);
 
 const btnFields = ref({
-  text: "Send",
+  key: "login",
+  text: "Login",
 });
+
+const handleClick = (key) => {
+  router.push("/dashboard");
+};
 </script>
 
 <style scoped>

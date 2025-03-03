@@ -1,6 +1,5 @@
 <template>
   <div
-    class="mx-2"
     :style="{
       width: fields.width || '100%',
       height: fields.height || '100%',
@@ -47,11 +46,16 @@ const props = defineProps({
 }
 
 .card:hover {
-  border: 1px solid var(--color-cornflowerblue);
+  border: 1px solid var(--color-wood);
 }
 
 .card-header {
   border: none;
+}
+
+.card-body {
+  /* white-space: nowrap; */
+  overflow: auto;
 }
 
 .icon {

@@ -54,6 +54,8 @@ onMounted(() => {
   <style scoped>
 canvas {
   max-width: 100%;
+  height: 200px;
+  /* height: 100%; */
 }
 /* canvas {
   width: 520px !important;

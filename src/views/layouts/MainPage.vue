@@ -46,7 +46,7 @@ import NavBar from "./NavBar.vue";
 
 .sideBarArea {
   height: 100%;
-  width: var(--width-sidebar);
+  min-width: var(--width-sidebar);
 }
 
 .contentArea {

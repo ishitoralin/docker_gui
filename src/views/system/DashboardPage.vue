@@ -1,10 +1,24 @@
 <template>
   <div class="container-fluid">
-    <div class="row">
-      <div
-        class="col-12 col-lg-6 d-flex justify-content-center align-items-center"
-      >
-        <CompTemplate :fields="dashboardFields['dashboardFields']">
+    <div class="row g-3">
+      <div class="col-12 col-md-6 col-lg-4">
+        <CompTemplate :fields="dashboardFields['systemInfo']">
+          <template #body>
+            <HorizonTable :items="basicTableItems"></HorizonTable>
+          </template>
+        </CompTemplate>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <CompTemplate :fields="dashboardFields['dockerInfo']">
+          <template #body>
+            <HorizonTable :items="versionTableItems"></HorizonTable>
+          </template>
+        </CompTemplate>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <CompTemplate :fields="dashboardFields['dashboard']">
           <template #body>
             <div class="bar-container">
               <ChartJs :data="barData" :options="dashboardChart.barOptions" />
@@ -12,21 +26,9 @@
           </template>
         </CompTemplate>
       </div>
-      <div
-        class="col-12 col-lg-6 d-flex justify-content-center align-items-center"
-      >
-        <CompTemplate :fields="dashboardFields['dashboardFields']">
-          <template #body>
-            <div class="bar-container">
-              <ChartJs :data="barData" :options="dashboardChart.barOptions" />
-            </div>
-          </template>
-        </CompTemplate>
-      </div>
-      <div
-        class="col-12 col-lg-6 d-flex justify-content-center align-items-center"
-      >
-        <CompTemplate :fields="dashboardFields.containersFields">
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <CompTemplate :fields="dashboardFields['containers']">
           <template #body>
             <div class="chart-container">
               <ChartJs
@@ -45,9 +47,18 @@
 import { onMounted, ref, computed } from "vue";
 import DockerAPI from "@/models/dockerApi";
 import CompTemplate from "@/components/CompTemplate.vue";
+import HorizonTable from "@/components/HorizonTable.vue";
 import ChartJs from "@/components/ChartJs.vue";
 import { dashboardChart } from "@/init/chartOptions";
 import { dashboardFields } from "@/init/fields";
+import { handleGetHorizonTableItems } from "@/models/helper";
+
+const dockerInfo = ref({});
+const imageInfo = ref([]);
+const networksInfo = ref([]);
+const volumesInfo = ref([]);
+const versionTableItems = ref([]);
+const basicTableItems = ref([]);
 
 const barData = computed(() => {
   const data = {
@@ -61,16 +72,16 @@ const barData = computed(() => {
           volumesInfo.value.length,
         ],
         backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(255, 205, 86, 0.2)",
           "rgba(75, 192, 192, 0.2)",
           "rgba(54, 162, 235, 0.2)",
+          "rgba(153, 102, 255, 0.2)",
+          "rgba(201, 203, 207, 0.2)",
         ],
         borderColor: [
-          "rgb(255, 99, 132)",
-          "rgb(255, 205, 86)",
           "rgb(75, 192, 192)",
           "rgb(54, 162, 235)",
+          "rgb(153, 102, 255)",
+          "rgb(201, 203, 207)",
         ],
         borderWidth: 1,
         datalabels: {
@@ -115,13 +126,27 @@ const doughnutData = computed(() => {
   return data;
 });
 
-const dockerInfo = ref({});
-const networksInfo = ref([]);
-const volumesInfo = ref([]);
-
 const fetchInfo = async () => {
   const response = await DockerAPI("getInfo");
   dockerInfo.value = response.result;
+
+  basicTableItems.value = handleGetHorizonTableItems(
+    dashboardFields.value["basicTableFields"],
+    response.result
+  );
+};
+
+const fetchVersion = async () => {
+  const response = await DockerAPI("getVersion");
+  versionTableItems.value = handleGetHorizonTableItems(
+    dashboardFields.value["versionTableFields"],
+    response.result
+  );
+};
+
+const fetchImageList = async () => {
+  const response = await DockerAPI("getImageList");
+  imageInfo.value = response.result;
 };
 
 const fetchNetworkList = async () => {
@@ -136,6 +161,8 @@ const fetchVolumeList = async () => {
 
 onMounted(() => {
   fetchInfo();
+  fetchVersion();
+  fetchImageList();
   fetchNetworkList();
   fetchVolumeList();
 });
@@ -147,14 +174,13 @@ onMounted(() => {
 }
 
 .bar-container {
-  height: 220px;
+  width: 100%;
   margin: auto;
   overflow: hidden;
 }
 
 .chart-container {
-  width: 220px;
-  height: 220px;
+  width: 100%;
   margin: auto;
   overflow: hidden;
 }

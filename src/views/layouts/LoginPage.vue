@@ -7,13 +7,11 @@
 </template>
 
 <script setup>
-import axios from "axios";
-import LoginForm from "@/components/LoginForm.vue";
-import ForgotForm from "@/components/ForgotForm.vue";
-import SignupForm from "@/components/SignupForm.vue";
 import { useRoute } from "vue-router";
+import LoginForm from "@/components/LoginPage/LoginForm.vue";
+import ForgotForm from "@/components/LoginPage/ForgotForm.vue";
+import SignupForm from "@/components/LoginPage/SignupForm.vue";
 const route = useRoute();
-SignupForm;
 </script>
 
 <style scoped>

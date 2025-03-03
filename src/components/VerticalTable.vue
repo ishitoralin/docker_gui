@@ -1,23 +1,18 @@
 <template>
   <div>
     <table class="table">
-      <tbody class="custom-tbody">
+      <thead>
+        <tr>
+          <th v-if="options?.order">#</th>
+          <th v-for="(item, index) in fields" :key="index">
+            {{ item.label }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
         <tr v-for="(item, index) in showItems" :key="index">
-          <td>
-            <slot
-              :name="`head(${item['swap'] || item['label']})`"
-              :row="{ key: item['key'], item: item, data: showItems }"
-            >
-              {{ item["label"] || item["key"] }}
-            </slot>
-          </td>
-          <td>
-            <slot
-              :name="`cell(${item['swap']}||${item['label']})`"
-              :row="{ key: item['value'], item: item, data: showItems }"
-            >
-              {{ item["value"] }}
-            </slot>
+          <td v-for="(element, i) in fields" :key="i">
+            {{ item[element["key"]] }}
           </td>
         </tr>
       </tbody>
@@ -25,7 +20,7 @@
 
     <div class="d-flex mt-3 justify-content-center align-items-center">
       <PaginationComp
-        v-if="options.paginationFunc"
+        v-if="options.pagination"
         v-model:currentPage="currentPage"
         v-model:totalPages="totalPages"
         class="ms-auto me-auto"
@@ -47,6 +42,10 @@ import { ref, computed, defineProps } from "vue";
 import PaginationComp from "./PaginationComp.vue";
 import DropdownsComp from "./DropdownsComp.vue";
 const props = defineProps({
+  fields: {
+    type: Array,
+    required: true,
+  },
   items: {
     type: Array,
     required: true,
@@ -56,6 +55,7 @@ const props = defineProps({
   },
   options: {
     type: Object,
+    required: true,
     default: () => {
       return {
         perPage: 10,
@@ -91,8 +91,4 @@ const showItems = computed(() => {
 </script>
 
 <style scoped>
-/* .custom-tbody {
-  white-space: nowrap;
-  overflow: auto;
-} */
 </style>

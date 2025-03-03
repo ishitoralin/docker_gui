@@ -28,9 +28,9 @@
 
 <script setup>
 import { ref } from "vue";
-import LoginFormInput from "@/components/LoginFormInput.vue";
-import LoginFormButton from "@/components/LoginFormButton.vue";
-import LoginFormTitle from "@/components/LoginFormTitle.vue";
+import LoginFormInput from "@/components/LoginPage/LoginFormInput.vue";
+import LoginFormButton from "@/components/LoginPage/LoginFormButton.vue";
+import LoginFormTitle from "@/components/LoginPage/LoginFormTitle.vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
