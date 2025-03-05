@@ -1,26 +1,46 @@
 <template>
   <div>
-    <CompTemplate :fields="fields">
+    <CompTemplate :fields="imagesFields['listTemplateFields']">
       <template #body>
-        <HorizonTable
-          :fields="tableFields"
+        <VerticalTable
+          :fields="imagesFields['listTableFields']"
           :items="tableItems"
           :options="options"
-        ></HorizonTable>
+        >
+          <template #cell(RepoTags)="{ row }">
+            <div class="custom-tags-style-container">
+              <span
+                class="custom-tags-style"
+                v-for="(item, index) in row['item']"
+                :key="index"
+              >
+                {{ item }}
+              </span>
+              <span
+                class="custom-tags-style"
+                v-for="(item, index) in row['item']"
+                :key="index"
+              >
+                {{ item }}
+              </span>
+            </div>
+          </template>
+        </VerticalTable>
+      </template>
+      <template #foot>
+        <div></div>
       </template>
     </CompTemplate>
   </div>
 </template>
 <script setup>
 import { onMounted, ref } from "vue";
-import CompTemplate from "@/components/CompTemplate.vue";
-import HorizonTable from "@/components/VerticalTable.vue";
 import DockerAPI from "@/models/dockerApi";
-const fields = ref({
-  icon: "bi-house",
-  title: "Dashboard",
-  tail: "hello",
-});
+import CompTemplate from "@/components/CompTemplate.vue";
+import VerticalTable from "@/components/VerticalTable.vue";
+import { handleGetVerticalTableItems } from "@/models/helper";
+import { filesize } from "filesize";
+import { imagesFields } from "@/init/fields";
 
 const options = ref({
   perPage: 10,
@@ -36,27 +56,31 @@ const options = ref({
   ],
 });
 
-const tableFields = ref([
-  { key: "name", label: "name" },
-  { key: "age", label: "age" },
-  {
-    key: "color",
-    label: "color",
-  },
-]);
+const tableItems = ref([]);
 
-const tableItems = ref([
-  { name: "neko1", age: 19, color: "white1" },
-  { name: "neko3", age: 139, color: "white3" },
-  { name: "neko3", age: 139, color: "white3" },
-]);
+const fetchImageList = async () => {
+  const response = await DockerAPI("getImageList");
+  tableItems.value = handleGetVerticalTableItems(
+    imagesFields.value["listTableFields"],
+    response.result
+  );
+};
+
+onMounted(() => {
+  fetchImageList();
+});
 </script>
 
 <style scoped>
-.editor {
-  width: 100%;
-  height: 300px;
-  border: 1px solid #ccc;
-  background-color: white;
+.custom-tags-style-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.custom-tags-style {
+  background-color: var(--color-cornflowerblue);
+  border-radius: 10px;
+  padding: 2px 5px;
 }
 </style>

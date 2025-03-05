@@ -5,14 +5,27 @@
         <tr>
           <th v-if="options?.order">#</th>
           <th v-for="(item, index) in fields" :key="index">
-            {{ item.label }}
+            <slot
+              :name="`head(${item['label']})`"
+              :row="{ key: item['key'], item: item, data: showItems }"
+              >{{ item.label }}</slot
+            >
           </th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(item, index) in showItems" :key="index">
           <td v-for="(element, i) in fields" :key="i">
-            {{ item[element["key"]] }}
+            <slot
+              :name="`cell(${element['key']})`"
+              :row="{
+                key: element,
+                item: item[element['key']],
+                data: showItems,
+              }"
+            >
+              {{ item[element["key"]] }}
+            </slot>
           </td>
         </tr>
       </tbody>
@@ -27,7 +40,7 @@
       ></PaginationComp>
 
       <DropdownsComp
-        v-if="options.dropdown.length"
+        v-if="options.dropdown?.length"
         :totalRows="totalRows"
         :dropdownList="options.dropdown"
         v-model:perPage="perPage"
@@ -91,4 +104,7 @@ const showItems = computed(() => {
 </script>
 
 <style scoped>
+/* .table {
+  white-space: nowrap;
+} */
 </style>

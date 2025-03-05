@@ -22,6 +22,10 @@
       <div class="card-body">
         <slot name="body"></slot>
       </div>
+
+      <div class="card-foot">
+        <slot name="foot"></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -54,8 +58,8 @@ const props = defineProps({
 }
 
 .card-body {
-  /* white-space: nowrap; */
-  overflow: auto;
+  white-space: nowrap;
+  overflow-x: auto;
 }
 
 .icon {

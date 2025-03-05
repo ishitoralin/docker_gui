@@ -14,3 +14,24 @@ export const handleGetHorizonTableItems = (fields, data) => {
 
     return result
 }
+
+export const handleGetVerticalTableItems = (fields, data) => {
+    const result = []
+    for (const item of data) {
+        const object = {}
+        for (const element of fields) {
+            if (item[element["key"]]) {
+                if (element["func"]) {
+                    const newValue = element["func"](item[element["key"]])
+                    object[element["key"]] = newValue
+                } else {
+                    object[element["key"]] = item[element["key"]]
+                }
+                continue
+            }
+        }
+        result.push(object)
+    }
+
+    return result
+}

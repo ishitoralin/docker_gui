@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <div class="row g-3">
-      <div class="col-12 col-md-6 col-lg-4">
+      <div class="col-12 col-lg-6">
         <CompTemplate :fields="dashboardFields['systemInfo']">
           <template #body>
             <HorizonTable :items="basicTableItems"></HorizonTable>
@@ -9,7 +9,7 @@
         </CompTemplate>
       </div>
 
-      <div class="col-12 col-md-6 col-lg-4">
+      <div class="col-12 col-lg-6">
         <CompTemplate :fields="dashboardFields['dockerInfo']">
           <template #body>
             <HorizonTable :items="versionTableItems"></HorizonTable>
@@ -17,7 +17,7 @@
         </CompTemplate>
       </div>
 
-      <div class="col-12 col-md-6 col-lg-4">
+      <div class="col-12 col-md-6">
         <CompTemplate :fields="dashboardFields['dashboard']">
           <template #body>
             <div class="bar-container">
@@ -27,7 +27,7 @@
         </CompTemplate>
       </div>
 
-      <div class="col-12 col-md-6 col-lg-4">
+      <div class="col-12 col-md-6">
         <CompTemplate :fields="dashboardFields['containers']">
           <template #body>
             <div class="chart-container">
