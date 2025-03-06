@@ -9,7 +9,7 @@
       {{ target }}
     </button>
     <ul class="dropdown-menu dropdown-menu-end">
-      <li v-for="(item, index) in dropdownList" :key="index">
+      <li v-for="(item, index) in options['dropdown']" :key="index">
         <a class="dropdown-item" @click="handleChangePerPage(item.text)">
           {{ item.text || "-" }}
         </a>
@@ -19,31 +19,24 @@
 </template>
 
 <script setup>
-import { ref, defineModel, defineProps } from "vue";
-const props = defineProps({
-  totalRows: {
-    type: Number,
-    required: true,
-  },
-  dropdownList: {
-    type: Array,
-    required: true,
-  },
-});
-const perPage = defineModel("perPage");
-const currentPage = defineModel("currentPage");
+import { ref, defineModel, defineProps, computed } from "vue";
+const options = defineModel("options");
 
-const target = ref(props.dropdownList[0].text);
+const totalPages = computed(() => {
+  return Math.ceil(options.value["rows"] / options.value["perPage"]) || 1;
+});
+
+const target = ref(options.value["dropdown"][0]["text"]);
 
 const handleChangePerPage = (key) => {
-  currentPage.value = 1;
+  options.value["currentPage"] = 1;
   target.value = key;
   if (typeof key === "string") {
-    perPage.value = props.totalRows;
-  } else if (key >= props.totalRows) {
-    perPage.value = props.totalRows;
+    options.value["perPage"] = options.value["rows"];
+  } else if (key >= options.value["rows"]) {
+    options.value["perPage"] = options.value["rows"];
   } else {
-    perPage.value = key;
+    options.value["perPage"] = key;
   }
 };
 </script>

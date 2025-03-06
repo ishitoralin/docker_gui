@@ -4,16 +4,16 @@
   /* --color-main: #101119; */
   --color-main: #212030;
   /* --color-border: #313131; */
-  --color-border: #343446;
-  --color-dark: #414149;
+  --color-border: rgb(52, 52, 70);
+  --color-dark: rgb(65, 65, 73);
 
   --color-white: #ffffff;
   --color-grey: grey;
-  --color-primary: #007bff;
+  --color-primary: rgb(0, 123, 255);
   --color-lightblue: rgb(216, 223, 236);
   --color-cornflowerblue: cornflowerblue;
-  --color-wood: #deb986;
-  --color-wood-active: #b3956c;
+  --color-wood: rgb(222, 185, 134);
+  --color-wood-active: rgb(179, 149, 108);
   --color-secondary: #6c757d;
   --color-green: green;
   --color-red: #9b0000;
@@ -106,15 +106,16 @@ button:focus {
 }
 
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5);
-  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 8px rgba(179, 149, 108, 0.4);
+  border-radius: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  -webkit-box-shadow: inset 0 0 8px rgba(222, 185, 134, 0.5);
 }

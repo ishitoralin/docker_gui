@@ -1,9 +1,98 @@
 <template>
   <div>
-    <h1>{{ router.path }}</h1>
+    <CompTemplate :fields="networksMainFields['networkListTemplateFields']">
+      <template #body>
+        <VerticalTable
+          :fields="networksMainFields['networkListTableFields']"
+          :items="networkListTableItems"
+          v-model:options="options"
+        >
+          <template #cell(RepoTags)="{ row }">
+            <div class="custom-tags-style-container">
+              <span
+                class="custom-tags-style"
+                v-for="(item, index) in row['item']"
+                :key="index"
+              >
+                {{ item }}
+              </span>
+              <span
+                class="custom-tags-style"
+                v-for="(item, index) in row['item']"
+                :key="index"
+              >
+                {{ item }}
+              </span>
+            </div>
+          </template>
+        </VerticalTable>
+      </template>
+      <template #foot>
+        <div class="template-foot">
+          <!-- v-if="networkListTableItems.length > 10" -->
+          <PaginationComp
+            class="mx-auto"
+            v-model:options="options"
+          ></PaginationComp>
+          <DropdownComp v-model:options="options"></DropdownComp>
+        </div>
+      </template>
+    </CompTemplate>
   </div>
 </template>
 <script setup>
-import { useRoute } from "vue-router";
-const router = useRoute();
+import { onMounted, ref } from "vue";
+import DockerAPI from "@/models/dockerApi";
+import CompTemplate from "@/components/CompTemplate.vue";
+import VerticalTable from "@/components/VerticalTable.vue";
+import PaginationComp from "@/components/PaginationComp.vue";
+import DropdownComp from "@/components/DropdownComp.vue";
+import { networksMainFields } from "@/init/fields";
+import { handleGetVerticalTableItems } from "@/models/helper";
+
+const networkListTableItems = ref([]);
+const options = ref({
+  perPage: 10,
+  currentPage: 1,
+  rows: 1,
+  dropdown: [
+    { key: 10, text: 10 },
+    { key: 20, text: 20 },
+    { key: 30, text: 30 },
+    { key: 40, text: 40 },
+    { key: 50, text: 50 },
+    { key: "all", text: "All" },
+  ],
+});
+
+const fetchList = async () => {
+  const response = await DockerAPI("getNetworkList");
+  networkListTableItems.value = handleGetVerticalTableItems(
+    networksMainFields.value["networkListTableFields"],
+    response.result
+  );
+  options.value["rows"] = networkListTableItems.value.length;
+};
+
+onMounted(() => {
+  fetchList();
+});
 </script>
+
+<style scoped>
+.custom-tags-style-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.custom-tags-style {
+  background-color: var(--color-cornflowerblue);
+  border-radius: 10px;
+  padding: 2px 5px;
+}
+
+.template-foot {
+  display: flex;
+}
+</style>

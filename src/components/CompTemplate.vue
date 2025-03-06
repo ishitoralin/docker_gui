@@ -23,7 +23,7 @@
         <slot name="body"></slot>
       </div>
 
-      <div class="card-foot">
+      <div class="card-footer">
         <slot name="foot"></slot>
       </div>
     </div>
@@ -60,6 +60,11 @@ const props = defineProps({
 .card-body {
   white-space: nowrap;
   overflow-x: auto;
+}
+
+.card-footer {
+  border: none;
+  background-color: var(--color-border);
 }
 
 .icon {

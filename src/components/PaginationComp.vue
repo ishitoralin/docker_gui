@@ -1,11 +1,15 @@
 <template>
-  <nav aria-label="Page navigation example">
+  <div>
     <ul class="pagination justify-content-center">
-      <li :class="['page-item', currentPage === 1 ? 'disabled' : '']">
+      <li
+        :class="['page-item', options['currentPage'] === 1 ? 'disabled' : '']"
+      >
         <a
           :class="[
             'page-link',
-            currentPage === 1 ? 'disabled-button' : 'non-target-page',
+            options['currentPage'] === 1
+              ? 'disabled-button'
+              : 'non-target-page',
           ]"
           href="#"
           @click="handleStart"
@@ -15,11 +19,15 @@
         </a>
       </li>
 
-      <li :class="['page-item', currentPage === 1 ? 'disabled' : '']">
+      <li
+        :class="['page-item', options['currentPage'] === 1 ? 'disabled' : '']"
+      >
         <a
           :class="[
             'page-link',
-            currentPage === 1 ? 'disabled-button' : 'non-target-page',
+            options['currentPage'] === 1
+              ? 'disabled-button'
+              : 'non-target-page',
           ]"
           href="#"
           @click="handleMinus"
@@ -28,7 +36,10 @@
         </a>
       </li>
 
-      <li v-if="totalPages > 5 && currentPage > 3" :class="['page-item']">
+      <li
+        v-if="totalPages > 5 && options['currentPage'] > 3"
+        :class="['page-item']"
+      >
         <ol :class="['page-link', 'non-target-page', 'disabled']">
           ‧ ‧ ‧
         </ol>
@@ -36,17 +47,24 @@
       <template v-for="index in totalPages" :key="index">
         <li
           v-if="
-            (index >= currentPage - 2 && index <= currentPage + 2) ||
-            (currentPage <= 2 && index <= 5) ||
-            (currentPage >= totalPages - 1 && index === currentPage - 4) ||
-            (currentPage === totalPages && index === totalPages - 5)
+            (index >= options['currentPage'] - 2 &&
+              index <= options['currentPage'] + 2) ||
+            (options['currentPage'] <= 2 && index <= 5) ||
+            (options['currentPage'] >= totalPages - 1 &&
+              index === options['currentPage'] - 4) ||
+            (options['currentPage'] === totalPages && index === totalPages - 5)
           "
-          :class="['page-item', currentPage === index ? 'active' : '']"
+          :class="[
+            'page-item',
+            options['currentPage'] === index ? 'active' : '',
+          ]"
         >
           <a
             :class="[
               'page-link',
-              currentPage === index ? 'target-page' : 'non-target-page',
+              options['currentPage'] === index
+                ? 'target-page'
+                : 'non-target-page',
             ]"
             href="#"
             @click="handleTargetPage(index)"
@@ -57,7 +75,7 @@
       </template>
 
       <li
-        v-if="totalPages > 5 && totalPages - currentPage >= 3"
+        v-if="totalPages > 5 && totalPages - options['currentPage'] >= 3"
         :class="['page-item']"
       >
         <ol :class="['page-link', 'non-target-page', 'disabled']">
@@ -65,11 +83,18 @@
         </ol>
       </li>
 
-      <li :class="['page-item', currentPage === totalPages ? 'disabled' : '']">
+      <li
+        :class="[
+          'page-item',
+          options['currentPage'] === totalPages ? 'disabled' : '',
+        ]"
+      >
         <a
           :class="[
             'page-link',
-            currentPage === totalPages ? 'disabled-button' : 'non-target-page',
+            options['currentPage'] === totalPages
+              ? 'disabled-button'
+              : 'non-target-page',
           ]"
           href="#"
           @click="handlePlus"
@@ -78,11 +103,18 @@
         </a>
       </li>
 
-      <li :class="['page-item', currentPage === totalPages ? 'disabled' : '']">
+      <li
+        :class="[
+          'page-item',
+          options['currentPage'] === totalPages ? 'disabled' : '',
+        ]"
+      >
         <a
           :class="[
             'page-link',
-            currentPage === totalPages ? 'disabled-button' : 'non-target-page',
+            options['currentPage'] === totalPages
+              ? 'disabled-button'
+              : 'non-target-page',
           ]"
           href="#"
           @click="handleEnd"
@@ -91,41 +123,38 @@
         </a>
       </li>
     </ul>
-  </nav>
+  </div>
 </template>
 <script setup>
-import { defineModel, defineProps } from "vue";
-const props = defineProps({
-  totalPages: {
-    type: Number,
-    required: true,
-  },
+import { computed, defineModel, defineProps } from "vue";
+const options = defineModel("options");
+
+const totalPages = computed(() => {
+  return Math.ceil(options.value["rows"] / options.value["perPage"]) || 1;
 });
-const currentPage = defineModel("currentPage");
-const totalPages = defineModel("totalPages");
 
 const handleTargetPage = (index) => {
-  currentPage.value = index;
+  options.value["currentPage"] = index;
 };
 
 const handlePlus = () => {
-  if (currentPage.value < props.totalPages) {
-    currentPage.value++;
+  if (options.value["currentPage"] < totalPages.value) {
+    options.value["currentPage"]++;
   }
 };
 
 const handleMinus = () => {
-  if (currentPage.value > 1) {
-    currentPage.value--;
+  if (options.value["currentPage"] > 1) {
+    options.value["currentPage"]--;
   }
 };
 
 const handleStart = () => {
-  currentPage.value = 1;
+  options.value["currentPage"] = 1;
 };
 
 const handleEnd = () => {
-  currentPage.value = props.totalPages;
+  options.value["currentPage"] = totalPages.value;
 };
 </script>
 

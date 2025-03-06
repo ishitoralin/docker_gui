@@ -30,30 +30,13 @@
         </tr>
       </tbody>
     </table>
-
-    <div class="d-flex mt-3 justify-content-center align-items-center">
-      <PaginationComp
-        v-if="options.pagination"
-        v-model:currentPage="currentPage"
-        v-model:totalPages="totalPages"
-        class="ms-auto me-auto"
-      ></PaginationComp>
-
-      <DropdownsComp
-        v-if="options.dropdown?.length"
-        :totalRows="totalRows"
-        :dropdownList="options.dropdown"
-        v-model:perPage="perPage"
-        v-model:currentPage="currentPage"
-      ></DropdownsComp>
-    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, defineProps } from "vue";
+import { ref, computed, defineProps, defineModel } from "vue";
 import PaginationComp from "./PaginationComp.vue";
-import DropdownsComp from "./DropdownsComp.vue";
+import DropdownComp from "./DropdownComp.vue";
 const props = defineProps({
   fields: {
     type: Array,
@@ -66,29 +49,24 @@ const props = defineProps({
       return [];
     },
   },
-  options: {
-    type: Object,
-    required: true,
-    default: () => {
-      return {
-        perPage: 10,
-        pagination: false,
-        currentPage: 1,
-        dropdown: [],
-      };
-    },
-  },
+  // options: {
+  //   type: Object,
+  //   required: true,
+  //   default: () => {
+  //     return {
+  //       perPage: 10,
+  //       currentPage: 1,
+  //       rows: 0,
+  //       dropdown: [],
+  //     };
+  //   },
+  // },
 });
 
-const perPage = ref(props.options?.perPage || 10);
-const currentPage = ref(props.options?.currentPage || 1);
-
-const totalRows = computed(() => {
-  return props.options?.totalRows || props.items.length;
-});
+const options = defineModel("options");
 
 const totalPages = computed(() => {
-  return Math.ceil(props.items.length / perPage.value);
+  return Math.ceil(options.value["rows"] / options.value["perPage"]) || 1;
 });
 
 const showItems = computed(() => {
@@ -96,15 +74,12 @@ const showItems = computed(() => {
     return [];
   }
 
-  const start = (currentPage.value - 1) * perPage.value;
-  const end = start + perPage.value;
+  const start = (options.value["currentPage"] - 1) * options.value["perPage"];
+  const end = start + options.value["perPage"];
   const rows = props.items.slice(start, end);
   return rows;
 });
 </script>
 
 <style scoped>
-/* .table {
-  white-space: nowrap;
-} */
 </style>

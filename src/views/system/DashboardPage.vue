@@ -2,23 +2,29 @@
   <div class="container-fluid">
     <div class="row g-3">
       <div class="col-12 col-lg-6">
-        <CompTemplate :fields="dashboardFields['systemInfo']">
+        <CompTemplate :fields="dashboardPageFields['systemInfoTemplateFields']">
           <template #body>
-            <HorizonTable :items="basicTableItems"></HorizonTable>
+            <HorizonTable
+              v-model:options="options"
+              :items="systemInfoTableItems"
+            ></HorizonTable>
           </template>
         </CompTemplate>
       </div>
 
       <div class="col-12 col-lg-6">
-        <CompTemplate :fields="dashboardFields['dockerInfo']">
+        <CompTemplate :fields="dashboardPageFields['dockerInfoTemplateFields']">
           <template #body>
-            <HorizonTable :items="versionTableItems"></HorizonTable>
+            <HorizonTable
+              v-model:options="options"
+              :items="dockerInfoTableItems"
+            ></HorizonTable>
           </template>
         </CompTemplate>
       </div>
 
       <div class="col-12 col-md-6">
-        <CompTemplate :fields="dashboardFields['dashboard']">
+        <CompTemplate :fields="dashboardPageFields['dashboardTemplateFields']">
           <template #body>
             <div class="bar-container">
               <ChartJs :data="barData" :options="dashboardChart.barOptions" />
@@ -28,7 +34,7 @@
       </div>
 
       <div class="col-12 col-md-6">
-        <CompTemplate :fields="dashboardFields['containers']">
+        <CompTemplate :fields="dashboardPageFields['containersTemplateFields']">
           <template #body>
             <div class="chart-container">
               <ChartJs
@@ -50,15 +56,19 @@ import CompTemplate from "@/components/CompTemplate.vue";
 import HorizonTable from "@/components/HorizonTable.vue";
 import ChartJs from "@/components/ChartJs.vue";
 import { dashboardChart } from "@/init/chartOptions";
-import { dashboardFields } from "@/init/fields";
+import { dashboardPageFields } from "@/init/fields";
 import { handleGetHorizonTableItems } from "@/models/helper";
 
 const dockerInfo = ref({});
 const imageInfo = ref([]);
 const networksInfo = ref([]);
 const volumesInfo = ref([]);
-const versionTableItems = ref([]);
-const basicTableItems = ref([]);
+const dockerInfoTableItems = ref([]);
+const systemInfoTableItems = ref([]);
+const options = ref({
+  perPage: 10,
+  currentPage: 1,
+});
 
 const barData = computed(() => {
   const data = {
@@ -130,16 +140,16 @@ const fetchInfo = async () => {
   const response = await DockerAPI("getInfo");
   dockerInfo.value = response.result;
 
-  basicTableItems.value = handleGetHorizonTableItems(
-    dashboardFields.value["basicTableFields"],
+  systemInfoTableItems.value = handleGetHorizonTableItems(
+    dashboardPageFields.value["systemInfoTableFields"],
     response.result
   );
 };
 
 const fetchVersion = async () => {
   const response = await DockerAPI("getVersion");
-  versionTableItems.value = handleGetHorizonTableItems(
-    dashboardFields.value["versionTableFields"],
+  dockerInfoTableItems.value = handleGetHorizonTableItems(
+    dashboardPageFields.value["dockerInfoTableFields"],
     response.result
   );
 };

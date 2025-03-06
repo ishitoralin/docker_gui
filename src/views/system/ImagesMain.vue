@@ -1,11 +1,11 @@
 <template>
   <div>
-    <CompTemplate :fields="imagesFields['listTemplateFields']">
+    <CompTemplate :fields="imagesMainFields['imageListTemplateFields']">
       <template #body>
         <VerticalTable
-          :fields="imagesFields['listTableFields']"
-          :items="tableItems"
-          :options="options"
+          :fields="imagesMainFields['imageListTableFields']"
+          :items="imageListTableItems"
+          v-model:options="options"
         >
           <template #cell(RepoTags)="{ row }">
             <div class="custom-tags-style-container">
@@ -28,7 +28,14 @@
         </VerticalTable>
       </template>
       <template #foot>
-        <div></div>
+        <div class="template-foot">
+          <!-- v-if="imageListTableItems.length > 10" -->
+          <PaginationComp
+            class="mx-auto"
+            v-model:options="options"
+          ></PaginationComp>
+          <DropdownComp v-model:options="options"></DropdownComp>
+        </div>
       </template>
     </CompTemplate>
   </div>
@@ -38,14 +45,16 @@ import { onMounted, ref } from "vue";
 import DockerAPI from "@/models/dockerApi";
 import CompTemplate from "@/components/CompTemplate.vue";
 import VerticalTable from "@/components/VerticalTable.vue";
+import PaginationComp from "@/components/PaginationComp.vue";
+import DropdownComp from "@/components/DropdownComp.vue";
+import { imagesMainFields } from "@/init/fields";
 import { handleGetVerticalTableItems } from "@/models/helper";
-import { filesize } from "filesize";
-import { imagesFields } from "@/init/fields";
 
+const imageListTableItems = ref([]);
 const options = ref({
   perPage: 10,
-  paginationFunc: true,
   currentPage: 1,
+  rows: 1,
   dropdown: [
     { key: 10, text: 10 },
     { key: 20, text: 20 },
@@ -56,18 +65,17 @@ const options = ref({
   ],
 });
 
-const tableItems = ref([]);
-
-const fetchImageList = async () => {
+const fetchList = async () => {
   const response = await DockerAPI("getImageList");
-  tableItems.value = handleGetVerticalTableItems(
-    imagesFields.value["listTableFields"],
+  imageListTableItems.value = handleGetVerticalTableItems(
+    imagesMainFields.value["imageListTableFields"],
     response.result
   );
+  options.value["rows"] = imageListTableItems.value.length;
 };
 
 onMounted(() => {
-  fetchImageList();
+  fetchList();
 });
 </script>
 
@@ -82,5 +90,9 @@ onMounted(() => {
   background-color: var(--color-cornflowerblue);
   border-radius: 10px;
   padding: 2px 5px;
+}
+
+.template-foot {
+  display: flex;
 }
 </style>

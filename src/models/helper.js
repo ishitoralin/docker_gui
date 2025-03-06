@@ -20,9 +20,10 @@ export const handleGetVerticalTableItems = (fields, data) => {
     for (const item of data) {
         const object = {}
         for (const element of fields) {
-            if (item[element["key"]]) {
+            if (String(item[element["key"]])) {
                 if (element["func"]) {
-                    const newValue = element["func"](item[element["key"]])
+                    const value = item[element["key"]]
+                    const newValue = element["func"](value)
                     object[element["key"]] = newValue
                 } else {
                     object[element["key"]] = item[element["key"]]
