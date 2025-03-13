@@ -7,6 +7,14 @@
           :items="networkListTableItems"
           v-model:options="options"
         >
+          <template #cell(Id)="{ item }">
+            <router-link
+              class="router-link-style"
+              :to="`/networks/inspect/${item}`"
+            >
+              {{ handleTruncateString(item) }}
+            </router-link>
+          </template>
           <template #cell(RepoTags)="{ row }">
             <div class="custom-tags-style-container">
               <span
@@ -29,12 +37,15 @@
       </template>
       <template #foot>
         <div class="template-foot">
-          <!-- v-if="networkListTableItems.length > 10" -->
           <PaginationComp
+            v-if="networkListTableItems.length > 10"
             class="mx-auto"
             v-model:options="options"
           ></PaginationComp>
-          <DropdownComp v-model:options="options"></DropdownComp>
+          <DropdownComp
+            v-if="networkListTableItems.length > 10"
+            v-model:options="options"
+          ></DropdownComp>
         </div>
       </template>
     </CompTemplate>
@@ -48,7 +59,10 @@ import VerticalTable from "@/components/VerticalTable.vue";
 import PaginationComp from "@/components/PaginationComp.vue";
 import DropdownComp from "@/components/DropdownComp.vue";
 import { networksMainFields } from "@/init/fields";
-import { handleGetVerticalTableItems } from "@/models/helper";
+import {
+  handleGetVerticalTableItems,
+  handleTruncateString,
+} from "@/models/helper";
 
 const networkListTableItems = ref([]);
 const options = ref({

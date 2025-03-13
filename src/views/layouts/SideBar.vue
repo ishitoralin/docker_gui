@@ -27,7 +27,8 @@ const sideBarItems = ref([]);
 const handleSetSideBar = () => {
   const main = routes
     .filter((item) => item.name === "main")[0]
-    ["children"].map((item) => {
+    ["children"].filter((item) => item.side)
+    .map((item) => {
       return { ...item, title: item.name, focus: false };
     });
 

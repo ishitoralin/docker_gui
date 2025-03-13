@@ -42,6 +42,62 @@ export const dashboardPageFields = ref({
     ],
 })
 
+export const containersMainFields = ref({
+    containerListTemplateFields: {
+        icon: "bi-house",
+        title: "Container List",
+        tail: "",
+    },
+
+    containerListTableFields: [
+        {
+            key: "State",
+            label: "State",
+        },
+        {
+            key: "Id",
+            label: "Id",
+        },
+        {
+            key: "Image",
+            label: "Image"
+        },
+        {
+            key: "Created",
+            label: "Created",
+            func: (item) => new Date(item * 1000).toLocaleString(),
+        },
+    ]
+})
+
+export const containersInspectFields = ref({
+    containerInspectTemplateFields: {
+        icon: "bi-house",
+        title: "Container Inspect",
+        tail: "",
+    },
+
+    containerListTableFields: [
+        {
+            key: "Id",
+            label: "Id",
+        },
+        {
+            key: "Image",
+            label: "Image"
+        },
+        {
+            key: "State",
+            label: "State",
+        },
+        {
+            key: "Created",
+            label: "Created",
+            func: (item) => new Date(item * 1000).toLocaleString(),
+        },
+    ]
+})
+
 export const imagesMainFields = ref({
     imageListTemplateFields: {
         icon: "bi-house",
@@ -50,8 +106,15 @@ export const imagesMainFields = ref({
     },
 
     imageListTableFields: [
-        { key: "Id", label: "Id", func: (item) => `${item.split("sha256:")[1].slice(0, 10)}...` },
-        { key: "RepoTags", label: "RepoTags" },
+        {
+            key: "Id",
+            label: "Id",
+            func: (item) => item.split(":")[1]
+        },
+        {
+            key: "RepoTags",
+            label: "RepoTags"
+        },
         {
             key: "Size",
             label: "Size",
@@ -65,23 +128,27 @@ export const imagesMainFields = ref({
     ]
 })
 
+export const imageInspectFields = ref({
+    imageInspectTemplateFields: {
+        icon: "bi-house",
+        title: "Image Inspect",
+        tail: "",
+    },
+})
+
 export const networksMainFields = ref({
     networkListTemplateFields: {
         icon: "bi-house",
-        title: "Image List",
+        title: "Network List",
         tail: "",
     },
 
     networkListTableFields: [
         { key: "Name", label: "Name", func: (item) => item },
-        { key: "Id", label: "Id", func: (item) => `${item.slice(0, 10)}...` },
-        { key: "Attachable", label: "Attachable", func: (item) => item },
-        {
-            key: "Internal",
-            label: "Internal",
-            func: (item) => item ? "true" : "false"
-        },
-        { key: "Driver", label: "Driver", func: (item) => item },
+        { key: "Id", label: "Id" },
+        { key: "Attachable", label: "Attachable" },
+        { key: "Internal", label: "Internal" },
+        { key: "Driver", label: "Driver" },
         { key: "IPAM", label: "IPAM", func: (item) => item.Config },
         {
             key: "Created",
@@ -89,4 +156,41 @@ export const networksMainFields = ref({
             func: (item) => new Date(item).toLocaleString(),
         },
     ]
+})
+
+export const networkInspectFields = ref({
+    networkInspectTemplateFields: {
+        icon: "bi-house",
+        title: "Network Inspect",
+        tail: "",
+    },
+})
+
+export const volumesMainFields = ref({
+    volumeListTemplateFields: {
+        icon: "bi-house",
+        title: "Volume List",
+        tail: "",
+    },
+
+    volumeListTableFields: [
+        { key: "Name", label: "Name" },
+        { key: "Driver", label: "Driver" },
+        // { key: "Mountpoint", label: "Mountpoint" },
+        { key: "Status", label: "Status" },
+        { key: "Labels", label: "Labels" },
+        {
+            key: "CreatedAt",
+            label: "Created",
+            func: (item) => new Date(item).toLocaleString(),
+        },
+    ]
+})
+
+export const volumeInspectFields = ref({
+    volumeInspectTemplateFields: {
+        icon: "bi-house",
+        title: "Volume Inspect",
+        tail: "",
+    },
 })

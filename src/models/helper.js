@@ -1,7 +1,7 @@
 export const handleGetHorizonTableItems = (fields, data) => {
     const result = []
     for (const element of fields) {
-        if (data[element["key"]]) {
+        if (String(data[element["key"]])) {
             if (element["func"]) {
                 const newValue = element["func"](data[element["key"]])
                 result.push({ key: element["key"], label: element["label"], value: newValue })
@@ -17,6 +17,7 @@ export const handleGetHorizonTableItems = (fields, data) => {
 
 export const handleGetVerticalTableItems = (fields, data) => {
     const result = []
+
     for (const item of data) {
         const object = {}
         for (const element of fields) {
@@ -35,4 +36,19 @@ export const handleGetVerticalTableItems = (fields, data) => {
     }
 
     return result
+}
+
+export const handleStringHeadToUpperCase = (string) => {
+    const head = string[0].toUpperCase();
+    const tail = string.slice(1).toLowerCase();
+    return head + tail;
+};
+
+export const handleTruncateString = (string) => {
+    if (typeof string !== "string") return string;
+
+    if (string.length > 20) {
+        return `${string.slice(0, 20)}...`;
+    }
+    return string;
 }

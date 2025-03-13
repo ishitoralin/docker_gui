@@ -18,6 +18,7 @@
           <td v-for="(element, i) in fields" :key="i">
             <slot
               :name="`cell(${element['key']})`"
+              :item="item[element['key']]"
               :row="{
                 key: element,
                 item: item[element['key']],

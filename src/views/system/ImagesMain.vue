@@ -7,6 +7,14 @@
           :items="imageListTableItems"
           v-model:options="options"
         >
+          <template #cell(Id)="{ item }">
+            <router-link
+              class="router-link-style"
+              :to="`/images/inspect/${item}`"
+            >
+              {{ handleTruncateString(item) }}
+            </router-link>
+          </template>
           <template #cell(RepoTags)="{ row }">
             <div class="custom-tags-style-container">
               <span
@@ -31,10 +39,14 @@
         <div class="template-foot">
           <!-- v-if="imageListTableItems.length > 10" -->
           <PaginationComp
+            v-if="imageListTableItems.length > 10"
             class="mx-auto"
             v-model:options="options"
           ></PaginationComp>
-          <DropdownComp v-model:options="options"></DropdownComp>
+          <DropdownComp
+            v-if="imageListTableItems.length > 10"
+            v-model:options="options"
+          ></DropdownComp>
         </div>
       </template>
     </CompTemplate>
@@ -48,7 +60,10 @@ import VerticalTable from "@/components/VerticalTable.vue";
 import PaginationComp from "@/components/PaginationComp.vue";
 import DropdownComp from "@/components/DropdownComp.vue";
 import { imagesMainFields } from "@/init/fields";
-import { handleGetVerticalTableItems } from "@/models/helper";
+import {
+  handleGetVerticalTableItems,
+  handleTruncateString,
+} from "@/models/helper";
 
 const imageListTableItems = ref([]);
 const options = ref({
@@ -88,7 +103,7 @@ onMounted(() => {
 
 .custom-tags-style {
   background-color: var(--color-cornflowerblue);
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 2px 5px;
 }
 

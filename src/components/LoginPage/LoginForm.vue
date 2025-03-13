@@ -122,8 +122,4 @@ const handleClick = (key) => {
 .signup-container {
   font-size: var(--font-m);
 }
-
-.router-link-style {
-  color: var(--color-cornflowerblue);
-}
 </style>

@@ -9,7 +9,8 @@ const DockerAPI = async (name, options) => {
     const api = UrlList[name]
     parameters["method"] = api["method"]
 
-    let serverUrl = `${protocol}//${hostname}:${port}`
+    let serverUrl = `${protocol}//${hostname}:${port}${api.path}`
+
     if (options) {
         if (options.typeParams) {
             parameters['responseType'] = options.typeParams.responseType
@@ -35,16 +36,16 @@ const DockerAPI = async (name, options) => {
                         queryParams.append(key, options.queryParams[key]);
                     }
                 }
-                parameters.params = queryParams;
+                parameters["params"] = queryParams;
             } else {
-                parameters.params = options.queryParams;
+                parameters["params"] = options.queryParams;
             }
         }
-
         if (options.pathParams) {
             if (typeof api.path === "string") {
-                serverUrl += api.path;
+                serverUrl = `${protocol}//${hostname}:${port}${api.path}`;
             } else if (Array.isArray(api.path)) {
+                serverUrl = `${protocol}//${hostname}:${port}`;
                 for (const element of api.path) {
                     if (typeof element === "string") {
                         serverUrl += element;
@@ -54,14 +55,9 @@ const DockerAPI = async (name, options) => {
                 }
             }
         }
-    } else {
-        if (typeof api.path === "string") {
-            serverUrl += api.path
-        }
     }
 
     parameters["url"] = serverUrl
-
     try {
         const response = await axios(parameters)
         if (response.data) {
