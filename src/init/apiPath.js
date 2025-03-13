@@ -6,6 +6,7 @@ const UrlList = {
 
     "getImageList": { method: "GET", path: "/api/docker/images/json" },
     "getImageInspect": { method: "GET", path: ["/api/docker/images/", { key: "id" }, "/json"] },
+    "postPullImage": { method: "POST", path: "/api/docker/images/create" },
     "getNetworkList": { method: "GET", path: "/api/docker/networks" },
     "getVolumeList": { method: "GET", path: "/api/docker/volumes" },
 }

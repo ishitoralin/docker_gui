@@ -15,6 +15,7 @@
               {{ handleTruncateString(item) }}
             </router-link>
           </template>
+          
           <template #cell(RepoTags)="{ row }">
             <div class="custom-tags-style-container">
               <span

@@ -98,7 +98,40 @@ export const containersInspectFields = ref({
     ]
 })
 
-export const imagesMainFields = ref({
+export const imagesPullFields = ref({
+    imagePullTemplateFields: {
+        icon: "bi-house",
+        title: "Pull Image",
+        tail: "",
+    },
+    imagePullInputBoxFields: {
+        title: "Pull Image",
+        type: "text",
+        placeholder: "Image:tag",
+    },
+
+    imagePullRegistryFields: {
+        title: "Registry",
+        type: "dropdown",
+        placeholder: "",
+    },
+
+    imagePullSearchButtonFields: {
+        title: "Search",
+        icon: "bi-search",
+        isSubmit: false,
+        isDisabled: false,
+    },
+
+    imagePullPullButtonFields: {
+        title: "Pull",
+        icon: "bi-arrow-down-square",
+        isSubmit: false,
+        isDisabled: false,
+    }
+})
+
+export const imagesListFields = ref({
     imageListTemplateFields: {
         icon: "bi-house",
         title: "Image List",
@@ -106,6 +139,10 @@ export const imagesMainFields = ref({
     },
 
     imageListTableFields: [
+        {
+            key: "checkbox",
+            label: "",
+        },
         {
             key: "Id",
             label: "Id",

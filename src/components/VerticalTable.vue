@@ -6,7 +6,7 @@
           <th v-if="options?.order">#</th>
           <th v-for="(item, index) in fields" :key="index">
             <slot
-              :name="`head(${item['label']})`"
+              :name="`head(${item['key']})`"
               :row="{ key: item['key'], item: item, data: showItems }"
               >{{ item.label }}</slot
             >
@@ -24,6 +24,7 @@
                 item: item[element['key']],
                 data: showItems,
               }"
+              :index="index"
             >
               {{ item[element["key"]] }}
             </slot>
