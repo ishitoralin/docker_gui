@@ -19,12 +19,12 @@
             <slot
               :name="`cell(${element['key']})`"
               :item="item[element['key']]"
+              :index="index"
               :row="{
                 key: element,
                 item: item[element['key']],
                 data: showItems,
               }"
-              :index="index"
             >
               {{ item[element["key"]] }}
             </slot>

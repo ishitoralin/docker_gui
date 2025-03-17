@@ -6,15 +6,23 @@
   --color-dark: rgb(65, 65, 73);
 
   --color-white: #ffffff;
-  --color-grey: grey;
-  --color-primary: rgb(0, 123, 255);
   --color-lightblue: rgb(216, 223, 236);
-  --color-cornflowerblue: cornflowerblue;
+  --color-bisque: bisque;
   --color-wood: rgb(222, 185, 134);
-  --color-wood-active: rgb(179, 149, 108);
-  --color-secondary: #6c757d;
+  --color-wood-light: rgb(222, 213, 134);
+  --color-wood-dark: rgb(179, 149, 108);
+  --color-aquamarine: aquamarine;
+  --color-aquamarine-light: rgb(111, 235, 173);
+  --color-aquamarine-dark: rgb(72, 207, 162);
   --color-green: green;
+  --color-cornflowerblue: cornflowerblue;
+  --color-primary: rgb(0, 123, 255);
+  --color-deeppink: deeppink;
+  --color-deeppink-light: rgb(255, 20, 196);
+  --color-deeppink-dark: rgb(218, 6, 165);
   --color-red: #9b0000;
+  --color-grey: grey;
+  --color-secondary: #6c757d;
   --color-bluelight: rgb(56, 196, 252, 0.4);
 
   --font-3l: 30px;
@@ -36,13 +44,19 @@
     0 0 110px rgba(222, 185, 134, 0.2), 0 0 130px rgba(222, 185, 134, 0.2),
     0 0 150px rgba(222, 185, 134, 0.2);
 
-  --box-shadow-wood: 0 0 5px rgba(222, 185, 134), 0 0 10px rgba(222, 185, 134),
-    0 0 20px rgba(222, 185, 134, 0.4), 0 0 30px rgba(222, 185, 134, 0.2),
-    0 0 110px rgba(222, 185, 134, 0.1), 0 0 150px rgba(222, 185, 134, 0.1);
+  --box-shadow-wood: 0 0 5px rgba(222, 185, 134, 0.4),
+    0 0 10px rgba(222, 185, 134), 0 0 20px rgba(222, 185, 134, 0.3),
+    0 0 30px rgba(222, 185, 134, 0.2), 0 0 110px rgba(222, 185, 134, 0.1),
+    0 0 150px rgba(222, 185, 134, 0.1);
 
-  --text-shadow-wood: 0 0 5px rgba(222, 185, 134, 0.7),
-    0 0 15px rgba(222, 185, 134, 0.6), 0 0 30px rgba(222, 185, 134, 0.5),
-    0 0 50px rgba(222, 185, 134, 0.4);
+  --text-shadow-wood: 0 0 5px var(--color-wood), 0 0 15px var(--color-wood-dark),
+    0 0 25px rgba(222, 185, 134, 0.6);
+
+  --text-shadow-aquamarine: 0 0 5px var(--color-aquamarine),
+    0 0 15px var(--color-aquamarine-dark), 0 0 25px rgba(72, 207, 162, 0.6);
+
+  --text-shadow-deeppink: 0 0 5px var(--color-deeppink),
+    0 0 15px var(--color-deeppink-dark), 0 0 25px rgba(255, 20, 196, 0.6);
 }
 
 * {

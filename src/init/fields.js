@@ -95,6 +95,56 @@ export const containersInspectFields = ref({
             label: "Created",
             func: (item) => new Date(item * 1000).toLocaleString(),
         },
+    ],
+
+    containerInspectButtonGroupFields: [
+        {
+            key: "Start",
+            icon: "bi-play-circle",
+            style: "safe",
+            width: "6.5rem",
+            isSubmit: false,
+            isDisabled: false,
+        },
+        {
+            key: "Restart",
+            icon: "bi-play-circle",
+            style: "safe",
+            width: "6.5rem",
+            isSubmit: false,
+            isDisabled: false,
+        },
+        {
+            key: "Pause",
+            icon: "bi-pause-circle",
+            width: "6.5rem",
+            isSubmit: false,
+            isDisabled: false,
+        },
+        {
+            key: "Unpause",
+            title: "Resume",
+            icon: "bi-play-circle",
+            width: "6.5rem",
+            isSubmit: false,
+            isDisabled: false,
+        },
+        {
+            key: "Stop",
+            icon: "bi-stop-circle",
+            style: "danger",
+            width: "6.5rem",
+            isSubmit: false,
+            isDisabled: false,
+        },
+        {
+            key: "Kill",
+            icon: "bi-x-circle",
+            style: "danger",
+            width: "6.5rem",
+            isSubmit: false,
+            isDisabled: false,
+        },
     ]
 })
 
@@ -117,14 +167,14 @@ export const imagesPullFields = ref({
     },
 
     imagePullSearchButtonFields: {
-        title: "Search",
+        key: "Search",
         icon: "bi-search",
         isSubmit: false,
         isDisabled: false,
     },
 
     imagePullPullButtonFields: {
-        title: "Pull",
+        key: "Pull",
         icon: "bi-arrow-down-square",
         isSubmit: false,
         isDisabled: false,

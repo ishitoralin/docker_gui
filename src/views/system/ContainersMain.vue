@@ -46,6 +46,25 @@
         </div>
       </template>
     </CompTemplate>
+
+    <CompTemplate :fields="containersMainFields['containerListTemplateFields']">
+      <template #body>
+        <AccordionCard></AccordionCard>
+      </template>
+      <template #foot>
+        <div class="template-foot">
+          <PaginationComp
+            v-if="containerListTableItems.length > 10"
+            class="mx-auto"
+            v-model:options="tableOptions"
+          ></PaginationComp>
+          <DropdownComp
+            v-if="containerListTableItems.length > 10"
+            v-model:options="tableOptions"
+          ></DropdownComp>
+        </div>
+      </template>
+    </CompTemplate>
   </div>
 </template>
 <script setup>
@@ -55,6 +74,7 @@ import CompTemplate from "@/components/CompTemplate.vue";
 import VerticalTable from "@/components/VerticalTable.vue";
 import PaginationComp from "@/components/PaginationComp.vue";
 import DropdownComp from "@/components/DropdownComp.vue";
+import AccordionCard from "@/components/AccordionCard.vue";
 import { containersMainFields } from "@/init/fields";
 import {
   handleGetVerticalTableItems,

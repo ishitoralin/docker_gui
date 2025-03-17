@@ -79,6 +79,8 @@ import { useImageStore } from "@/stores/imageStore";
 const imageStore = useImageStore();
 
 const checkList = ref([]);
+const checkboxAll = ref(false);
+
 const handleChange = (index) => {
   imageStore["checkList"][index]["value"] =
     !imageStore["checkList"][index]["value"];
@@ -86,7 +88,6 @@ const handleChange = (index) => {
   checkboxAll.value = imageStore["checkList"].every((item) => item["value"]);
 };
 
-const checkboxAll = ref(false);
 const handleChangeAll = () => {
   checkboxAll.value = !checkboxAll.value;
 

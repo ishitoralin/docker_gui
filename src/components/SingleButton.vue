@@ -1,8 +1,22 @@
 <template>
   <div>
-    <button class="btn custom-button-style" :disabled="fields['isDisabled']">
+    <button
+      :class="[
+        'btn',
+        'custom-basic-button-style',
+        {
+          'custom-button-style-normal':
+            !fields['style'] || fields['style'] === 'normal',
+
+          'custom-button-style-danger': fields['style'] === 'danger',
+          'custom-button-style-safe': fields['style'] === 'safe',
+        },
+      ]"
+      :style="{ width: fields['width'] || '6.5rem' }"
+      :disabled="fields['isDisabled']"
+    >
       <i v-if="fields['icon']" :class="['bi', fields['icon']]"></i>
-      {{ fields["title"] }}
+      {{ fields["title"] || fields["key"] }}
     </button>
   </div>
 </template>
@@ -28,33 +42,76 @@ const props = defineProps({
 });
 </script>
 <style scoped>
+.btn {
+  white-space: nowrap;
+}
+
 .custom-inputbox-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.custom-button-style {
+.custom-basic-button-style {
   padding: 5px 10px;
   border-radius: 5px;
   background-color: transparent;
-  /* border: 2px solid var(--color-lightblue); */
-  border: 2px solid;
-  border-color: aquamarine;
-  color: aquamarine;
   transition: all 0.3s;
   font-weight: bold;
+  border: 2px solid;
 }
 
-.custom-button-style:hover {
-  border: 2px solid var(--color-wood);
+.custom-button-style-normal {
+  border-color: var(--color-wood);
   color: var(--color-wood);
+  transition: all 0.3s;
+}
+
+.custom-button-style-normal:hover {
+  border-color: var(--color-wood-light);
+  color: var(--color-wood-light);
   transition: all 0.3s;
   text-shadow: var(--text-shadow-wood);
 }
 
-.custom-button-style:active {
-  border: 2px solid var(--color-wood-active);
-  color: var(--color-wood-active);
+.custom-button-style-normal:active {
+  border-color: var(--color-wood-dark);
+  color: var(--color-wood-dark);
+}
+
+.custom-button-style-danger {
+  border-color: var(--color-deeppink);
+  color: var(--color-deeppink);
+  transition: all 0.3s;
+}
+
+.custom-button-style-danger:hover {
+  border-color: var(--color-deeppink-light);
+  color: var(--color-deeppink-light);
+  transition: all 0.3s;
+  text-shadow: var(--text-shadow-deeppink);
+}
+
+.custom-button-style-danger:active {
+  border-color: var(--color-deeppink-dark);
+  color: var(--color-deeppink-dark);
+}
+
+.custom-button-style-safe {
+  border-color: var(--color-aquamarine);
+  color: var(--color-aquamarine);
+  transition: all 0.3s;
+}
+
+.custom-button-style-safe:hover {
+  border-color: var(--color-aquamarine-light);
+  color: var(--color-aquamarine-light);
+  transition: all 0.3s;
+  text-shadow: var(--text-shadow-aquamarine);
+}
+
+.custom-button-style-safe:active {
+  border-color: var(--color-aquamarine-dark);
+  color: var(--color-aquamarine-dark);
 }
 </style>

@@ -64,7 +64,7 @@ const DockerAPI = async (name, options) => {
             return response.data
         }
     } catch (error) {
-        return error.response
+        return error
     }
 }
 

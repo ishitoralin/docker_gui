@@ -57,6 +57,6 @@ const handleSearchImage = () => {
 };
 
 const handlePullImage = async () => {
-  imageStore.pullImage(searchValue.value);
+  imageStore.fetchPullImage(searchValue.value);
 };
 </script>

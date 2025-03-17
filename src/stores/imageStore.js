@@ -34,13 +34,13 @@ export const useImageStore = defineStore("imageStore", () => {
         }
     };
 
-    const pullImage = async (name) => {
+    const fetchPullImage = async (name) => {
         const options = {
             queryParams: {
                 fromImage: name,
             },
         };
-        const response = await DockerAPI("postPullImage", options);
+        const response = await DockerAPI("postImagePull", options);
         if (response.status === 201) {
             await fetchList();
         }
@@ -51,6 +51,6 @@ export const useImageStore = defineStore("imageStore", () => {
         tableOptions,
         checkList,
         fetchList,
-        pullImage,
+        fetchPullImage,
     };
 });

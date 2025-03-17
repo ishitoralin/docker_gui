@@ -41,6 +41,6 @@ const handleClick = () => {
 }
 
 .btn-container:active {
-  background-color: var(--color-wood-active);
+  background-color: var(--color-wood-dark);
 }
 </style>
