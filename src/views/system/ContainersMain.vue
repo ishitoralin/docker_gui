@@ -1,87 +1,84 @@
 <template>
   <div>
-    <CompTemplate :fields="containersMainFields['containerListTemplateFields']">
-      <template #body>
-        <VerticalTable
-          :fields="containersMainFields['containerListTableFields']"
-          :items="containerListTableItems"
-          v-model:options="tableOptions"
-        >
-          <template #cell(State)="{ item }">
-            <span
-              :class="[
-                'custom-state-style',
-                {
-                  'custom-text-created': item === 'created',
-                  'custom-text-running': item === 'running',
-                  'custom-text-paused': item === 'paused',
-                  'custom-text-exited': item === 'exited',
-                },
-              ]"
-            >
-              {{ handleStringHeadToUpperCase(item) }}
-            </span>
-          </template>
-          <template #cell(Id)="{ item }">
-            <router-link
-              class="router-link-style"
-              :to="`/containers/inspect/${item}`"
-            >
-              {{ handleTruncateString(item) }}
-            </router-link>
-          </template>
-        </VerticalTable>
-      </template>
-      <template #foot>
-        <div class="template-foot">
-          <PaginationComp
-            v-if="containerListTableItems.length > 10"
-            class="mx-auto"
-            v-model:options="tableOptions"
-          ></PaginationComp>
-          <DropdownComp
-            v-if="containerListTableItems.length > 10"
-            v-model:options="tableOptions"
-          ></DropdownComp>
+    <AccordionCard
+      :fields="containersMainFields['containerListAccordionFields']"
+      :items="containerListTableItems"
+      v-model:options="tableOptions"
+    >
+      <template #head="{ item }">
+        <div class="d-flex">
+          <div
+            class="me-2"
+            :class="[
+              'custom-state-style',
+              {
+                'custom-text-created': item['State'] === 'created',
+                'custom-text-running': item['State'] === 'running',
+                'custom-text-paused': item['State'] === 'paused',
+                'custom-text-exited': item['State'] === 'exited',
+              },
+            ]"
+          >
+            {{ handleStringHeadToUpperCase(item["State"]) }}
+          </div>
+          <router-link
+            class="router-link-style"
+            :to="`/containers/inspect/${item['Id']}`"
+            @click="handleLinkClick(item['Id'])"
+          >
+            {{ handleTruncateString(item["Id"]) }}
+          </router-link>
         </div>
       </template>
-    </CompTemplate>
 
-    <CompTemplate :fields="containersMainFields['containerListTemplateFields']">
-      <template #body>
-        <AccordionCard></AccordionCard>
-      </template>
-      <template #foot>
-        <div class="template-foot">
-          <PaginationComp
-            v-if="containerListTableItems.length > 10"
-            class="mx-auto"
-            v-model:options="tableOptions"
-          ></PaginationComp>
-          <DropdownComp
-            v-if="containerListTableItems.length > 10"
-            v-model:options="tableOptions"
-          ></DropdownComp>
+      <template #body="{ item }">
+        <div class="d-flex">
+          <div>
+            <div class="custon-button-group">
+              <SingleButton
+                v-for="(buttonItem, buttonIndex) in containersMainFields[
+                  'containerListAccordionButtonGroupFields'
+                ]"
+                :key="buttonIndex"
+                :fields="buttonItem"
+                @click="handleAction(buttonItem['key'], item['Id'])"
+              ></SingleButton>
+            </div>
+          </div>
         </div>
       </template>
-    </CompTemplate>
+    </AccordionCard>
+
+    <div class="d-flex">
+      <PaginationComp
+        v-if="containerListTableItems.length > 10"
+        class="mx-auto"
+        v-model:options="tableOptions"
+      ></PaginationComp>
+      <DropdownComp
+        v-if="containerListTableItems.length > 10"
+        v-model:options="tableOptions"
+      ></DropdownComp>
+    </div>
   </div>
 </template>
 <script setup>
 import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 import DockerAPI from "@/models/dockerApi";
 import CompTemplate from "@/components/CompTemplate.vue";
 import VerticalTable from "@/components/VerticalTable.vue";
 import PaginationComp from "@/components/PaginationComp.vue";
 import DropdownComp from "@/components/DropdownComp.vue";
 import AccordionCard from "@/components/AccordionCard.vue";
+import SingleButton from "@/components/SingleButton.vue";
 import { containersMainFields } from "@/init/fields";
 import {
-  handleGetVerticalTableItems,
   handleStringHeadToUpperCase,
   handleTruncateString,
 } from "@/models/helper";
 
+const router = useRouter();
 const containerListTableItems = ref([]);
 const tableOptions = ref({
   perPage: 10,
@@ -97,6 +94,10 @@ const tableOptions = ref({
   ],
 });
 
+const handleLinkClick = (id) => {
+  router.push(`/containers/inspect/${id}`);
+};
+
 const fetchList = async () => {
   const options = {
     queryParams: {
@@ -104,11 +105,21 @@ const fetchList = async () => {
     },
   };
   const response = await DockerAPI("getContainerList", options);
-  containerListTableItems.value = handleGetVerticalTableItems(
-    containersMainFields.value["containerListTableFields"],
-    response.result
-  );
+  containerListTableItems.value = response.result;
   tableOptions.value["rows"] = containerListTableItems.value.length;
+};
+
+const handleAction = (action, id) => {
+  // fetchAction(action,id);
+};
+
+const fetchAction = async (action, id) => {
+  const options = {
+    pathParams: {
+      id: id,
+    },
+  };
+  const response = await DockerAPI(`postContainer${action}`, options);
 };
 
 onMounted(() => {
@@ -138,5 +149,11 @@ onMounted(() => {
 }
 .custom-text-exited {
   background-color: var(--color-secondary);
+}
+
+.custon-button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 </style>

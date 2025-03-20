@@ -49,6 +49,11 @@ export const containersMainFields = ref({
         tail: "",
     },
 
+    containerListAccordionFields: {
+        key: "Id",
+        label: "Id",
+    },
+
     containerListTableFields: [
         {
             key: "State",
@@ -66,6 +71,56 @@ export const containersMainFields = ref({
             key: "Created",
             label: "Created",
             func: (item) => new Date(item * 1000).toLocaleString(),
+        },
+    ],
+
+    containerListAccordionButtonGroupFields: [
+        {
+            key: "Start",
+            icon: "bi-play-circle",
+            style: "safe",
+            width: "6.5rem",
+            isSubmit: false,
+            isDisabled: false,
+        },
+        {
+            key: "Restart",
+            icon: "bi-play-circle",
+            style: "safe",
+            width: "6.5rem",
+            isSubmit: false,
+            isDisabled: false,
+        },
+        {
+            key: "Pause",
+            icon: "bi-pause-circle",
+            width: "6.5rem",
+            isSubmit: false,
+            isDisabled: false,
+        },
+        {
+            key: "Unpause",
+            title: "Resume",
+            icon: "bi-play-circle",
+            width: "6.5rem",
+            isSubmit: false,
+            isDisabled: false,
+        },
+        {
+            key: "Stop",
+            icon: "bi-stop-circle",
+            style: "danger",
+            width: "6.5rem",
+            isSubmit: false,
+            isDisabled: false,
+        },
+        {
+            key: "Kill",
+            icon: "bi-x-circle",
+            style: "danger",
+            width: "6.5rem",
+            isSubmit: false,
+            isDisabled: false,
         },
     ]
 })

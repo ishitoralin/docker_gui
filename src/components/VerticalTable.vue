@@ -8,7 +8,7 @@
             <slot
               :name="`head(${item['key']})`"
               :row="{ key: item['key'], item: item, data: showItems }"
-              >{{ item.label }}</slot
+              >{{ item["label"] }}</slot
             >
           </th>
         </tr>
@@ -37,8 +37,6 @@
 
 <script setup>
 import { ref, computed, defineProps, defineModel } from "vue";
-import PaginationComp from "./PaginationComp.vue";
-import DropdownComp from "./DropdownComp.vue";
 const props = defineProps({
   fields: {
     type: Array,

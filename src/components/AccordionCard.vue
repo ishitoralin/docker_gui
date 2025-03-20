@@ -1,25 +1,25 @@
 <template>
   <div class="accordion accordion-flush" id="accordionFlushExample">
-    <div v-for="(item, index) in fields" :key="index" class="accordion-item">
+    <div v-for="(item, index) in showItems" :key="index" class="accordion-item">
       <h2 class="accordion-header">
         <button
           class="accordion-button collapsed"
           type="button"
           data-bs-toggle="collapse"
-          :data-bs-target="`#flush-${item['key']}`"
+          :data-bs-target="`#flush-${index}`"
           aria-expanded="false"
           aria-controls="flush-collapseOne"
         >
-          <slot :name="`head(${item['key']})`">{{ item["title"] }}</slot>
+          <slot :name="`head`" :index="index" :item="item" :data="showItems">
+            {{ item[fields["label"]] }}
+          </slot>
         </button>
       </h2>
-      <div
-        :id="`flush-${item['key']}`"
-        class="accordion-collapse collapse"
-        data-bs-parent="#accordionFlushExample"
-      >
+      <div :id="`flush-${index}`" class="accordion-collapse collapse">
         <div class="accordion-body">
-          <slot :name="`body(${item['key']})`">{{ item["content"] }}</slot>
+          <slot :name="`body`" :index="index" :item="item" :data="showItems">{{
+            showItems[index]
+          }}</slot>
         </div>
       </div>
     </div>
@@ -28,33 +28,53 @@
     
 
 <script setup>
-import { defineProps } from "vue";
+import { ref, computed, defineProps, defineModel } from "vue";
 const props = defineProps({
   fields: {
     type: Object,
     required: true,
     default: () => {
-      return [
-        {
-          key: 1,
-          title: "Accordion Item #1",
-          content:
-            "Placeholder content for this accordion, which is intended to demonstrate the .accordion-flush class. This is the first item's accordion body.",
-        },
-        {
-          key: 2,
-          title: "Accordion Item #2",
-          content:
-            "Placeholder content for this accordion, which is intended to demonstrate the .accordion-flush class. This is the second item's accordion body. Let's imagine this being filled with some actual content.",
-        },
-        {
-          key: 3,
-          title: "Accordion Item #3",
-          content:
-            "Placeholder content for this accordion, which is intended to demonstrate the .accordion-flush class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.",
-        },
-      ];
+      return {
+        key: 1,
+        label: "hello",
+      };
+    },
+  },
+  items: {
+    type: Array,
+    required: true,
+    default: () => {
+      return [];
     },
   },
 });
+
+const options = defineModel("options");
+
+const totalPages = computed(() => {
+  return Math.ceil(options.value["rows"] / options.value["perPage"]) || 1;
+});
+
+const showItems = computed(() => {
+  if (!props.items || !Array.isArray(props.items)) {
+    return [];
+  }
+
+  const start = (options.value["currentPage"] - 1) * options.value["perPage"];
+  const end = start + options.value["perPage"];
+  const rows = props.items.slice(start, end);
+  return rows;
+});
 </script>
+
+<style scoped>
+.accordion,
+.accordion-header,
+.accordion-body,
+.accordion-item,
+.accordion-button {
+  background-color: transparent;
+  color: var(--color-white);
+  box-shadow: none;
+}
+</style>

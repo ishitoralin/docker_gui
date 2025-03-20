@@ -15,7 +15,7 @@
             ]"
             :key="index"
             :fields="item"
-            @click="handleAction(item['title'])"
+            @click="handleAction(item['key'])"
           ></SingleButton>
         </div>
       </template>
@@ -45,6 +45,7 @@ const fetchInspect = async () => {
 };
 
 const handleAction = (action) => {
+  console.log(action);
   // fetchAction(action);
 };
 
