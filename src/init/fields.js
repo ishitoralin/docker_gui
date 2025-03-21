@@ -68,18 +68,41 @@ export const containersMainFields = ref({
             label: "Image"
         },
         {
+            key: "NetworkSettings",
+            label: "IP",
+            func: (item) => item['Networks']['bridge']['IPAddress']
+        },
+        {
+            key: "Ports",
+            label: "Ports",
+            func: (item) => {
+                item = item.filter((value) => value['PublicPort'])
+                let result = ""
+                if (item.length) {
+                    for (let i = 0; i < item.length; i++) {
+                        const element = item[i];
+                        result += `${element['PublicPort']}`
+                        if (i < item.length - 1) {
+                            result += `, `
+                        }
+                    }
+                }
+                return result
+            }
+        },
+        {
             key: "Created",
             label: "Created",
             func: (item) => new Date(item * 1000).toLocaleString(),
         },
     ],
 
-    containerListAccordionButtonGroupFields: [
+    containerListAccordionActionButtonFields: [
         {
             key: "Start",
             icon: "bi-play-circle",
             style: "safe",
-            width: "6.5rem",
+            width: "4.5rem",
             isSubmit: false,
             isDisabled: false,
         },
@@ -87,14 +110,15 @@ export const containersMainFields = ref({
             key: "Restart",
             icon: "bi-play-circle",
             style: "safe",
-            width: "6.5rem",
+            width: "4.5rem",
             isSubmit: false,
             isDisabled: false,
         },
         {
             key: "Pause",
             icon: "bi-pause-circle",
-            width: "6.5rem",
+            style: "safe",
+            width: "4.5rem",
             isSubmit: false,
             isDisabled: false,
         },
@@ -102,7 +126,8 @@ export const containersMainFields = ref({
             key: "Unpause",
             title: "Resume",
             icon: "bi-play-circle",
-            width: "6.5rem",
+            style: "safe",
+            width: "4.5rem",
             isSubmit: false,
             isDisabled: false,
         },
@@ -110,7 +135,7 @@ export const containersMainFields = ref({
             key: "Stop",
             icon: "bi-stop-circle",
             style: "danger",
-            width: "6.5rem",
+            width: "4.5rem",
             isSubmit: false,
             isDisabled: false,
         },
@@ -118,7 +143,50 @@ export const containersMainFields = ref({
             key: "Kill",
             icon: "bi-x-circle",
             style: "danger",
-            width: "6.5rem",
+            width: "4.5rem",
+            isSubmit: false,
+            isDisabled: false,
+        },
+    ],
+
+    containerListAccordionRouterButtonFields: [
+        {
+            key: "inspect",
+            title: "Inspect",
+            icon: "bi-card-list",
+            width: "4.5rem",
+            isSubmit: false,
+            isDisabled: false,
+        },
+        {
+            key: "logs",
+            title: "Logs",
+            icon: "bi-journal",
+            width: "4.5rem",
+            isSubmit: false,
+            isDisabled: false,
+        },
+        {
+            key: "stats",
+            title: "Stats",
+            icon: "bi-bar-chart-line",
+            width: "4.5rem",
+            isSubmit: false,
+            isDisabled: false,
+        },
+        {
+            key: "console",
+            title: "Console",
+            icon: "bi-cpu",
+            width: "4.5rem",
+            isSubmit: false,
+            isDisabled: false,
+        },
+        {
+            key: "attach",
+            title: "Attach",
+            icon: "bi-plug",
+            width: "4.5rem",
             isSubmit: false,
             isDisabled: false,
         },
@@ -126,38 +194,19 @@ export const containersMainFields = ref({
 })
 
 export const containersInspectFields = ref({
-    containerInspectTemplateFields: {
+    // Actions
+    containerInspectActionTemplateFields: {
         icon: "bi-house",
-        title: "Container Inspect",
+        title: "Actions",
         tail: "",
     },
 
-    containerListTableFields: [
-        {
-            key: "Id",
-            label: "Id",
-        },
-        {
-            key: "Image",
-            label: "Image"
-        },
-        {
-            key: "State",
-            label: "State",
-        },
-        {
-            key: "Created",
-            label: "Created",
-            func: (item) => new Date(item * 1000).toLocaleString(),
-        },
-    ],
-
-    containerInspectButtonGroupFields: [
+    containerInspectActionButtonFields: [
         {
             key: "Start",
             icon: "bi-play-circle",
             style: "safe",
-            width: "6.5rem",
+            width: "4.5rem",
             isSubmit: false,
             isDisabled: false,
         },
@@ -165,22 +214,24 @@ export const containersInspectFields = ref({
             key: "Restart",
             icon: "bi-play-circle",
             style: "safe",
-            width: "6.5rem",
+            width: "4.5rem",
             isSubmit: false,
             isDisabled: false,
         },
         {
             key: "Pause",
             icon: "bi-pause-circle",
-            width: "6.5rem",
+            style: "safe",
+            width: "4.5rem",
             isSubmit: false,
             isDisabled: false,
         },
         {
             key: "Unpause",
             title: "Resume",
+            style: "safe",
             icon: "bi-play-circle",
-            width: "6.5rem",
+            width: "4.5rem",
             isSubmit: false,
             isDisabled: false,
         },
@@ -188,7 +239,7 @@ export const containersInspectFields = ref({
             key: "Stop",
             icon: "bi-stop-circle",
             style: "danger",
-            width: "6.5rem",
+            width: "4.5rem",
             isSubmit: false,
             isDisabled: false,
         },
@@ -196,11 +247,130 @@ export const containersInspectFields = ref({
             key: "Kill",
             icon: "bi-x-circle",
             style: "danger",
-            width: "6.5rem",
+            width: "4.5rem",
             isSubmit: false,
             isDisabled: false,
         },
-    ]
+    ],
+
+    containerInspectRouterButtonFields: [
+        {
+            key: "inspect",
+            title: "Inspect",
+            icon: "bi-card-list",
+            width: "4.5rem",
+            isSubmit: false,
+            isDisabled: false,
+        },
+        {
+            key: "logs",
+            title: "Logs",
+            icon: "bi-journal",
+            width: "4.5rem",
+            isSubmit: false,
+            isDisabled: false,
+        },
+        {
+            key: "stats",
+            title: "Stats",
+            icon: "bi-bar-chart-line",
+            width: "4.5rem",
+            isSubmit: false,
+            isDisabled: false,
+        },
+        {
+            key: "console",
+            title: "Console",
+            icon: "bi-cpu",
+            width: "4.5rem",
+            isSubmit: false,
+            isDisabled: false,
+        },
+        {
+            key: "attach",
+            title: "Attach",
+            icon: "bi-plug",
+            width: "4.5rem",
+            isSubmit: false,
+            isDisabled: false,
+        },
+    ],
+
+    // container inspect main
+    containerInspectMainTemplateFields: {
+        icon: "bi-house",
+        title: "Container Inspect",
+        tail: "",
+    },
+
+    containerInspectMainTableFields: [
+        { key: "Id", label: "Id" },
+        { key: "Args", label: "Args" },
+        { key: "State", label: "State", func: (item) => item['Status'] },
+        { key: "Driver", label: "Driver" },
+        { key: "LogPath", label: "LogPath" },
+        { key: "MountLabel", label: "MountLabel" },
+        { key: "Mounts", label: "Mounts" },
+        // { key: "Config", label: "Config" },
+        { key: "Created", label: "Created" },
+    ],
+
+    // container inspect image
+    containerInspectImageTemplateFields: {
+        icon: "bi-house",
+        title: "Image",
+        tail: "",
+    },
+
+    containerInspectImageTableFields: [
+        { key: "Image", label: "Image ID" },
+        { key: "Config", label: "Image", func: (item) => item['Image'] },
+        { key: "State", label: "State", func: (item) => item['Status'] },
+        { key: "Driver", label: "Driver" },
+        { key: "LogPath", label: "LogPath" },
+        { key: "MountLabel", label: "MountLabel" },
+        { key: "Mounts", label: "Mounts" },
+        // { key: "Config", label: "Config" },
+        { key: "Created", label: "Created" },
+    ],
+
+    // container inspect network
+    containerInspectNetworkTemplateFields: {
+        icon: "bi-house",
+        title: "Network",
+        tail: "",
+    },
+
+    containerInspectNetworkTableFields: [
+        { key: "Id", label: "Id" },
+        { key: "Args", label: "Args" },
+        { key: "State", label: "State", func: (item) => item['Status'] },
+        { key: "Driver", label: "Driver" },
+        { key: "LogPath", label: "LogPath" },
+        { key: "MountLabel", label: "MountLabel" },
+        { key: "Mounts", label: "Mounts" },
+        // { key: "Config", label: "Config" },
+        { key: "Created", label: "Created" },
+    ],
+
+    // container inspect volume
+    containerInspectVolumeTemplateFields: {
+        icon: "bi-house",
+        title: "Volume",
+        tail: "",
+    },
+
+    containerInspectVolumeTableFields: [
+        { key: "Id", label: "Id" },
+        { key: "Args", label: "Args" },
+        { key: "State", label: "State", func: (item) => item['Status'] },
+        { key: "Driver", label: "Driver" },
+        { key: "LogPath", label: "LogPath" },
+        { key: "MountLabel", label: "MountLabel" },
+        { key: "Mounts", label: "Mounts" },
+        // { key: "Config", label: "Config" },
+        { key: "Created", label: "Created" },
+    ],
 })
 
 export const imagesPullFields = ref({

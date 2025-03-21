@@ -6,44 +6,50 @@
       v-model:options="tableOptions"
     >
       <template #head="{ item }">
-        <div class="d-flex">
+        <div class="d-flex" style="width: 100%">
           <div
-            class="me-2"
-            :class="[
-              'custom-state-style',
-              {
-                'custom-text-created': item['State'] === 'created',
-                'custom-text-running': item['State'] === 'running',
-                'custom-text-paused': item['State'] === 'paused',
-                'custom-text-exited': item['State'] === 'exited',
-              },
-            ]"
+            style="width: 5rem"
+            class="me-3"
+            :class="['custom-state-style', `custom-text-${item['State']}`]"
           >
             {{ handleStringHeadToUpperCase(item["State"]) }}
           </div>
-          <router-link
-            class="router-link-style"
-            :to="`/containers/inspect/${item['Id']}`"
-            @click="handleLinkClick(item['Id'])"
-          >
-            {{ handleTruncateString(item["Id"]) }}
-          </router-link>
+          <div>
+            <router-link
+              class="router-link-style"
+              :to="``"
+              @click="handleLinkClick(item['Id'])"
+            >
+              {{ item["Names"][0].split("/")[1] }}
+            </router-link>
+          </div>
         </div>
       </template>
 
       <template #body="{ item }">
-        <div class="d-flex">
-          <div>
-            <div class="custon-button-group">
-              <SingleButton
-                v-for="(buttonItem, buttonIndex) in containersMainFields[
-                  'containerListAccordionButtonGroupFields'
-                ]"
-                :key="buttonIndex"
-                :fields="buttonItem"
-                @click="handleAction(buttonItem['key'], item['Id'])"
-              ></SingleButton>
-            </div>
+        <div class="d-flex mb-3">
+          <div class="custon-button-group">
+            <SingleButton
+              v-for="(buttonItem, buttonIndex) in containersMainFields[
+                'containerListAccordionActionButtonFields'
+              ]"
+              :key="buttonIndex"
+              :fields="buttonItem"
+              @click="handleAction(buttonItem['key'], item['Id'])"
+            ></SingleButton>
+          </div>
+        </div>
+
+        <div>
+          <div class="custon-button-group">
+            <SingleButton
+              v-for="(buttonItem, buttonIndex) in containersMainFields[
+                'containerListAccordionRouterButtonFields'
+              ]"
+              :key="buttonIndex"
+              :fields="buttonItem"
+              @click="handleRouter(buttonItem['key'], item['Id'])"
+            ></SingleButton>
           </div>
         </div>
       </template>
@@ -68,6 +74,7 @@ import { useRouter } from "vue-router";
 import DockerAPI from "@/models/dockerApi";
 import CompTemplate from "@/components/CompTemplate.vue";
 import VerticalTable from "@/components/VerticalTable.vue";
+import HorizonTable from "@/components/HorizonTable.vue";
 import PaginationComp from "@/components/PaginationComp.vue";
 import DropdownComp from "@/components/DropdownComp.vue";
 import AccordionCard from "@/components/AccordionCard.vue";
@@ -105,12 +112,20 @@ const fetchList = async () => {
     },
   };
   const response = await DockerAPI("getContainerList", options);
-  containerListTableItems.value = response.result;
+  const sortedResults = response.result.sort((a, b) => {
+    return a["Names"][0].localeCompare(b["Names"][0]);
+  });
+
+  containerListTableItems.value = sortedResults;
   tableOptions.value["rows"] = containerListTableItems.value.length;
 };
 
+const handleRouter = (key, id) => {
+  router.push(`/containers/${key}/${id}`);
+};
+
 const handleAction = (action, id) => {
-  // fetchAction(action,id);
+  fetchAction(action, id);
 };
 
 const fetchAction = async (action, id) => {
@@ -120,6 +135,9 @@ const fetchAction = async (action, id) => {
     },
   };
   const response = await DockerAPI(`postContainer${action}`, options);
+  if (response.reason === "ok") {
+    fetchList();
+  }
 };
 
 onMounted(() => {
@@ -138,6 +156,7 @@ onMounted(() => {
   display: inline-block;
   text-align: center;
 }
+
 .custom-text-created {
   background-color: var(--color-cornflowerblue);
 }

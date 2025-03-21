@@ -8,17 +8,7 @@
           v-model:options="tableOptions"
         >
           <template #cell(State)="{ item }">
-            <span
-              :class="[
-                'custom-state-style',
-                {
-                  'custom-text-created': item === 'created',
-                  'custom-text-running': item === 'running',
-                  'custom-text-paused': item === 'paused',
-                  'custom-text-exited': item === 'exited',
-                },
-              ]"
-            >
+            <span :class="['custom-state-style', `custom-text-${item}`]">
               {{ handleStringHeadToUpperCase(item) }}
             </span>
           </template>

@@ -1,24 +1,22 @@
 <template>
-  <div>
-    <button
-      :class="[
-        'btn',
-        'custom-basic-button-style',
-        {
-          'custom-button-style-normal':
-            !fields['style'] || fields['style'] === 'normal',
+  <button
+    :class="[
+      'btn',
+      'custom-basic-button-style',
+      {
+        'custom-button-style-normal':
+          !fields['style'] || fields['style'] === 'normal',
 
-          'custom-button-style-danger': fields['style'] === 'danger',
-          'custom-button-style-safe': fields['style'] === 'safe',
-        },
-      ]"
-      :style="{ width: fields['width'] || '6.5rem' }"
-      :disabled="fields['isDisabled']"
-    >
-      <i v-if="fields['icon']" :class="['bi', fields['icon']]"></i>
-      {{ fields["title"] || fields["key"] }}
-    </button>
-  </div>
+        'custom-button-style-danger': fields['style'] === 'danger',
+        'custom-button-style-safe': fields['style'] === 'safe',
+      },
+    ]"
+    :style="{ width: fields['width'] || '4.5rem' }"
+    :disabled="fields['isDisabled']"
+  >
+    <i v-if="fields['icon']" :class="['bi', fields['icon']]"></i>
+    {{ fields["title"] || fields["key"] }}
+  </button>
 </template>
 
 <script setup>
@@ -53,12 +51,13 @@ const props = defineProps({
 }
 
 .custom-basic-button-style {
-  padding: 5px 10px;
+  padding: 3px 5px;
   border-radius: 5px;
   background-color: transparent;
   transition: all 0.3s;
   font-weight: bold;
   border: 2px solid;
+  font-size: var(--font-s);
 }
 
 .custom-button-style-normal {

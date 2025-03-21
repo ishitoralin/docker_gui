@@ -41,6 +41,31 @@ export const routes = [
         component: () => import("../views/system/ContainersInspect.vue"),
       },
       {
+        path: '/containers/logs/:id',
+        name: 'Container Logs',
+        component: () => import("../views/system/ContainersLogs.vue"),
+      },
+      {
+        path: '/containers/stats/:id',
+        name: 'Container Stats',
+        component: () => import("../views/system/ContainersStats.vue"),
+      },
+      {
+        path: '/containers/console/:id',
+        name: 'Container Console',
+        component: () => import("../views/system/ContainersConsole.vue"),
+      },
+      {
+        path: '/containers/attach/:id',
+        name: 'Container Attach',
+        component: () => import("../views/system/ContainersAttach.vue"),
+      },
+      {
+        path: '/containers/create',
+        name: 'Container Create',
+        component: () => import("../views/system/ContainersCreate.vue"),
+      },
+      {
         side: true,
         icon: "bi bi-disc",
         path: "/images",

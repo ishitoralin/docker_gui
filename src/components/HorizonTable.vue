@@ -35,27 +35,22 @@ const props = defineProps({
       return [];
     },
   },
-  // options: {
-  //   type: Object,
-  //   required: true,
-  //   default: () => {
-  //     return {
-  //       perPage: 10,
-  //       currentPage: 1,
-  //       rows: 0,
-  //       dropdown: [],
-  //     };
-  //   },
-  // },
 });
 
-const options = defineModel("options");
+const options = defineModel("options", {
+  required: false,
+  default: () => ({ perPage: 10, currentPage: 1, rows: 0 }),
+});
 
 const totalPages = computed(() => {
   return Math.ceil(options.value["rows"] / options.value["perPage"]) || 1;
 });
 
 const showItems = computed(() => {
+  if (!options) {
+    return props.items;
+  }
+
   if (!props.items || !Array.isArray(props.items)) {
     return [];
   }

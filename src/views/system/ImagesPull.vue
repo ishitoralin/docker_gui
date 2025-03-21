@@ -3,9 +3,9 @@
     <CompTemplate :fields="imagesPullFields['imagePullTemplateFields']">
       <template #body>
         <InputBox
-          v-model:value="registryValue"
           :fields="imagesPullFields['imagePullRegistryFields']"
           :items="registryItems"
+          v-model:value="registryValue"
         ></InputBox>
 
         <InputBox
@@ -17,7 +17,7 @@
           <SingleButton
             :fields="imagesPullFields['imagePullSearchButtonFields']"
             @click="handleSearchImage"
-            class="mb-3 me-3"
+            class="me-3"
           ></SingleButton>
 
           <SingleButton
