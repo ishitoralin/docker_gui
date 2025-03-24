@@ -5,24 +5,25 @@
   --color-border: rgb(52, 52, 70);
   --color-dark: rgb(65, 65, 73);
 
-  --color-white: #ffffff;
+  --color-white: #e6e6e6;
   --color-lightblue: rgb(216, 223, 236);
   --color-bisque: bisque;
+  --color-bisque-dark: rgb(180, 161, 136);
   --color-wood: rgb(222, 185, 134);
   --color-wood-light: rgb(222, 213, 134);
   --color-wood-dark: rgb(179, 149, 108);
   --color-aquamarine: aquamarine;
   --color-aquamarine-light: rgb(111, 235, 173);
   --color-aquamarine-dark: rgb(72, 207, 162);
-  --color-green: green;
-  --color-cornflowerblue: cornflowerblue;
+  --color-green: rgb(0, 128, 0);
+  --color-cornflowerblue: rgb(100, 149, 237);
   --color-primary: rgb(0, 123, 255);
   --color-deeppink: deeppink;
   --color-deeppink-light: rgb(255, 20, 196);
   --color-deeppink-dark: rgb(218, 6, 165);
-  --color-red: #9b0000;
-  --color-grey: grey;
-  --color-secondary: #6c757d;
+  --color-red: rgb(155, 0, 0);
+  --color-grey: rgb(128, 128, 128);
+  --color-secondary: rgb(108, 117, 125);
   --color-bluelight: rgb(56, 196, 252, 0.4);
 
   --font-3l: 28px;

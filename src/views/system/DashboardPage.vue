@@ -118,15 +118,11 @@ const doughnutData = computed(() => {
           dockerInfo.value["ContainersStopped"],
         ],
         backgroundColor: [
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(255, 205, 86, 0.2)",
-          "rgba(255, 99, 132, 0.2)",
+          "rgba(0, 128, 0, 0.2)",
+          "rgba(155, 0, 0, 0.2)",
+          "rgba(128, 128, 128, 0.2)",
         ],
-        borderColor: [
-          "rgb(75, 192, 192)",
-          "rgb(255, 205, 86)",
-          "rgb(255, 99, 132)",
-        ],
+        borderColor: ["rgb(0, 128, 0)", "rgb(155, 0, 0)", "rgb(128, 128, 128)"],
         datalabels: {
           display: false,
         },

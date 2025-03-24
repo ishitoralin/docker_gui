@@ -4,6 +4,18 @@
       class="mb-3"
       :fields="containersInspectFields['containerInspectActionTemplateFields']"
     >
+      <template #title>
+        <span class="me-2">
+          {{
+            containersInspectFields["containerInspectActionTemplateFields"][
+              "title"
+            ]
+          }}
+        </span>
+        <span :class="['custom-state-style', `custom-text-${containerState}`]">
+          {{ handleStringHeadToUpperCase(containerState) }}
+        </span>
+      </template>
       <template #body>
         <div class="custon-button-group mb-3">
           <SingleButton
@@ -81,10 +93,12 @@ import { containersInspectFields } from "@/init/fields";
 import {
   handleGetVerticalTableItems,
   handleGetHorizonTableItems,
-} from "@/models/helper";
+  handleStringHeadToUpperCase,
+} from "@/models/helper.js";
 const route = useRoute();
 const router = useRouter();
 
+const containerState = ref("");
 const containerInspectMainTableItems = ref([]);
 const containerInspectImageTableItems = ref([]);
 const containerInspectNetworkTableItems = ref([]);
@@ -117,25 +131,26 @@ const fetchInspect = async () => {
     },
   };
   const response = await DockerAPI("getContainerInspect", options);
-  console.log(response.result);
+  containerState.value = response["result"]["State"]["Status"];
+
   containerInspectMainTableItems.value = handleGetHorizonTableItems(
     containersInspectFields.value["containerInspectMainTableFields"],
-    response.result
+    response["result"]
   );
 
   containerInspectImageTableItems.value = handleGetHorizonTableItems(
     containersInspectFields.value["containerInspectImageTableFields"],
-    response.result
+    response["result"]
   );
 
   containerInspectNetworkTableItems.value = handleGetHorizonTableItems(
     containersInspectFields.value["containerInspectMainTableFields"],
-    response.result
+    response["result"]
   );
 
   containerInspectVolumeTableItems.value = handleGetHorizonTableItems(
     containersInspectFields.value["containerInspectMainTableFields"],
-    response.result
+    response["result"]
   );
 };
 
@@ -145,6 +160,27 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.custom-state-style {
+  width: 4rem;
+  border-radius: 4px;
+  font-size: var(--font-m);
+  display: inline-block;
+  text-align: center;
+}
+
+.custom-text-created {
+  background-color: var(--color-cornflowerblue);
+}
+.custom-text-running {
+  background-color: var(--color-green);
+}
+.custom-text-paused {
+  background-color: var(--color-red);
+}
+.custom-text-exited {
+  background-color: var(--color-secondary);
+}
+
 .custon-button-group {
   display: flex;
   flex-wrap: wrap;

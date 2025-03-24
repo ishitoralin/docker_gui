@@ -39,6 +39,8 @@ export const handleGetVerticalTableItems = (fields, data) => {
 }
 
 export const handleStringHeadToUpperCase = (string) => {
+    if (!string || typeof string !== "string") return string
+
     const head = string[0].toUpperCase();
     const tail = string.slice(1).toLowerCase();
     return head + tail;
