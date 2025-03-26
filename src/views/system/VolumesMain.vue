@@ -7,32 +7,13 @@
           :items="volumeListTableItems"
           v-model:options="options"
         >
-          <template #cell(Name)="{ item }">
+          <template #cell(Name)="{ item, key }">
             <router-link
               class="router-link-style"
-              :to="`/volumes/inspect/${item}`"
+              :to="`/volumes/detail/${item[key]}`"
             >
-              {{ handleTruncateString(item) }}
+              {{ handleTruncateString(item[key]) }}
             </router-link>
-          </template>
-          
-          <template #cell(RepoTags)="{ row }">
-            <div class="custom-tags-style-container">
-              <span
-                class="custom-tags-style"
-                v-for="(item, index) in row['item']"
-                :key="index"
-              >
-                {{ item }}
-              </span>
-              <span
-                class="custom-tags-style"
-                v-for="(item, index) in row['item']"
-                :key="index"
-              >
-                {{ item }}
-              </span>
-            </div>
           </template>
         </VerticalTable>
       </template>

@@ -7,31 +7,13 @@
           :items="networkListTableItems"
           v-model:options="options"
         >
-          <template #cell(Id)="{ item }">
+          <template #cell(Id)="{ item, key }">
             <router-link
               class="router-link-style"
-              :to="`/networks/inspect/${item}`"
+              :to="`/networks/detail/${item[key]}`"
             >
-              {{ handleTruncateString(item) }}
+              {{ handleTruncateString(item[key]) }}
             </router-link>
-          </template>
-          <template #cell(RepoTags)="{ row }">
-            <div class="custom-tags-style-container">
-              <span
-                class="custom-tags-style"
-                v-for="(item, index) in row['item']"
-                :key="index"
-              >
-                {{ item }}
-              </span>
-              <span
-                class="custom-tags-style"
-                v-for="(item, index) in row['item']"
-                :key="index"
-              >
-                {{ item }}
-              </span>
-            </div>
           </template>
         </VerticalTable>
       </template>

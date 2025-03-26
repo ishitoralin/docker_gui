@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { filesize } from "filesize";
-
+import { handleDateTransform } from "@/models/helper.js"
 export const dashboardPageFields = ref({
     systemInfoTemplateFields: {
         icon: "bi-house",
@@ -103,24 +103,24 @@ export const containersMainFields = ref({
             icon: "bi-play-circle",
             style: "safe",
             width: "4.5rem",
-            isSubmit: false,
-            isDisabled: false,
+
+
         },
         {
             key: "Restart",
             icon: "bi-play-circle",
             style: "safe",
             width: "4.5rem",
-            isSubmit: false,
-            isDisabled: false,
+
+
         },
         {
             key: "Pause",
             icon: "bi-pause-circle",
             style: "safe",
             width: "4.5rem",
-            isSubmit: false,
-            isDisabled: false,
+
+
         },
         {
             key: "Unpause",
@@ -128,103 +128,97 @@ export const containersMainFields = ref({
             icon: "bi-play-circle",
             style: "safe",
             width: "4.5rem",
-            isSubmit: false,
-            isDisabled: false,
+
+
         },
         {
             key: "Stop",
             icon: "bi-stop-circle",
             style: "danger",
             width: "4.5rem",
-            isSubmit: false,
-            isDisabled: false,
+
+
         },
         {
             key: "Kill",
             icon: "bi-x-circle",
             style: "danger",
             width: "4.5rem",
-            isSubmit: false,
-            isDisabled: false,
+
+
         },
     ],
 
     containerListAccordionRouterButtonFields: [
         {
-            key: "inspect",
-            title: "Inspect",
+            key: "detail",
+            title: "Detail",
             icon: "bi-card-list",
             width: "4.5rem",
-            isSubmit: false,
-            isDisabled: false,
+
+
         },
         {
             key: "logs",
             title: "Logs",
             icon: "bi-journal",
             width: "4.5rem",
-            isSubmit: false,
-            isDisabled: false,
+
+
         },
         {
             key: "stats",
             title: "Stats",
             icon: "bi-bar-chart-line",
             width: "4.5rem",
-            isSubmit: false,
-            isDisabled: false,
+
+
         },
         {
             key: "console",
             title: "Console",
             icon: "bi-cpu",
             width: "4.5rem",
-            isSubmit: false,
-            isDisabled: false,
+
+
         },
         {
             key: "attach",
             title: "Attach",
             icon: "bi-plug",
             width: "4.5rem",
-            isSubmit: false,
-            isDisabled: false,
+
+
         },
     ]
 })
 
-export const containersInspectFields = ref({
+export const containersDetailFields = ref({
     // Actions
-    containerInspectActionTemplateFields: {
+    containerDetailActionTemplateFields: {
         icon: "bi-house",
         title: "Actions",
         tail: "",
     },
 
-    containerInspectActionButtonFields: [
+    containerDetailActionButtonFields: [
         {
             key: "Start",
             icon: "bi-play-circle",
             style: "safe",
             width: "4.5rem",
-            isSubmit: false,
-            isDisabled: false,
         },
         {
             key: "Restart",
             icon: "bi-play-circle",
             style: "safe",
             width: "4.5rem",
-            isSubmit: false,
-            isDisabled: false,
         },
         {
             key: "Pause",
             icon: "bi-pause-circle",
             style: "safe",
             width: "4.5rem",
-            isSubmit: false,
-            isDisabled: false,
         },
         {
             key: "Unpause",
@@ -232,145 +226,156 @@ export const containersInspectFields = ref({
             style: "safe",
             icon: "bi-play-circle",
             width: "4.5rem",
-            isSubmit: false,
-            isDisabled: false,
         },
         {
             key: "Stop",
             icon: "bi-stop-circle",
             style: "danger",
             width: "4.5rem",
-            isSubmit: false,
-            isDisabled: false,
         },
         {
             key: "Kill",
             icon: "bi-x-circle",
             style: "danger",
             width: "4.5rem",
-            isSubmit: false,
-            isDisabled: false,
         },
     ],
 
-    containerInspectRouterButtonFields: [
+    containerDetailRouterButtonFields: [
         {
-            key: "inspect",
-            title: "Inspect",
+            key: "detail",
+            title: "Detail",
             icon: "bi-card-list",
             width: "4.5rem",
-            isSubmit: false,
-            isDisabled: false,
         },
         {
             key: "logs",
             title: "Logs",
             icon: "bi-journal",
             width: "4.5rem",
-            isSubmit: false,
-            isDisabled: false,
         },
         {
             key: "stats",
             title: "Stats",
             icon: "bi-bar-chart-line",
             width: "4.5rem",
-            isSubmit: false,
-            isDisabled: false,
         },
         {
             key: "console",
             title: "Console",
             icon: "bi-cpu",
             width: "4.5rem",
-            isSubmit: false,
-            isDisabled: false,
         },
         {
             key: "attach",
             title: "Attach",
             icon: "bi-plug",
             width: "4.5rem",
-            isSubmit: false,
-            isDisabled: false,
         },
     ],
 
-    // container inspect main
-    containerInspectMainTemplateFields: {
+    // container detail main
+    containerDetailMainTemplateFields: {
         icon: "bi-house",
-        title: "Container Inspect",
+        title: "Container Detail",
         tail: "",
     },
 
-    containerInspectMainTableFields: [
+    containerDetailMainTableFields: [
         { key: "Id", label: "Id" },
-        { key: "Args", label: "Args" },
+        { key: "Name", label: "Name", func: (item) => item.split("/")[1] },
+        // { key: "Args", label: "Args" },
         { key: "State", label: "State", func: (item) => item['Status'] },
-        { key: "Driver", label: "Driver" },
-        { key: "LogPath", label: "LogPath" },
+        // { key: "Driver", label: "Driver" },
+        // { key: "LogPath", label: "LogPath" },
         { key: "MountLabel", label: "MountLabel" },
         { key: "Mounts", label: "Mounts" },
         // { key: "Config", label: "Config" },
-        { key: "Created", label: "Created" },
+        { key: "State", label: "Start At", func: (item) => handleDateTransform(item['StartedAt']) },
+        { key: "Created", label: "Created", func: (item) => handleDateTransform(item) },
     ],
 
-    // container inspect image
-    containerInspectImageTemplateFields: {
+    // container detail image
+    containerDetailImageTemplateFields: {
         icon: "bi-house",
         title: "Image",
         tail: "",
     },
 
-    containerInspectImageTableFields: [
-        { key: "Image", label: "Image ID" },
-        { key: "Config", label: "Image", func: (item) => item['Image'] },
-        { key: "State", label: "State", func: (item) => item['Status'] },
-        { key: "Driver", label: "Driver" },
-        { key: "LogPath", label: "LogPath" },
-        { key: "MountLabel", label: "MountLabel" },
-        { key: "Mounts", label: "Mounts" },
-        // { key: "Config", label: "Config" },
-        { key: "Created", label: "Created" },
+    containerDetailImageTableFields: [
+        { key: "Image", label: "Image Id" },
+        { key: "Config", label: "Image Name", func: (item) => item['Image'] },
+        { key: "", swap: "Create", label: "Create Image", },
     ],
 
-    // container inspect network
-    containerInspectNetworkTemplateFields: {
+    containerDetailCreateInputBoxFields: {
+        title: "",
+        type: "text",
+        placeholder: "repo:tag",
+    },
+
+    containerDetailCreateButtonFields: {
+        key: "create",
+        title: "Create",
+        icon: "bi-card-list",
+        width: "5rem",
+    },
+
+    // container detail network
+    containerDetailNetworkTemplateFields: {
         icon: "bi-house",
         title: "Network",
         tail: "",
     },
 
-    containerInspectNetworkTableFields: [
-        { key: "Id", label: "Id" },
-        { key: "Args", label: "Args" },
-        { key: "State", label: "State", func: (item) => item['Status'] },
-        { key: "Driver", label: "Driver" },
-        { key: "LogPath", label: "LogPath" },
-        { key: "MountLabel", label: "MountLabel" },
-        { key: "Mounts", label: "Mounts" },
-        // { key: "Config", label: "Config" },
-        { key: "Created", label: "Created" },
+    containerDetailNetworkTableFields: [
+        { key: "Name", label: "Name" },
+        {
+            key: "IPAddress",
+            label: "IP Address",
+        },
+        { key: "Gateway", label: "Gateway" },
+        { key: "MacAddress", label: "Mac Address" },
+        { key: "disconnect", label: "Disconnect", options: { width: '15rem' } },
     ],
 
-    // container inspect volume
-    containerInspectVolumeTemplateFields: {
+    containerDetailDisconnectButtonFields: {
+        key: "disconnect",
+        title: "Disconnect",
+        icon: "bi-card-list",
+        style: "danger",
+        width: "6rem",
+    },
+
+    containerDetailNetworksFields: {
+        title: "Networks",
+        type: "dropdown",
+        placeholder: "",
+    },
+
+    containerDetailUnusedNetworkFields: {
         icon: "bi-house",
-        title: "Volume",
+        title: "Unused Network",
         tail: "",
     },
 
-    containerInspectVolumeTableFields: [
+    containerDetailConnectButtonFields: {
+        key: "connect",
+        title: "Connect",
+        style: "safe",
+        icon: "bi-card-list",
+        width: "6rem",
+    },
+
+    containerDetailUnusedNetworkTableFields: [
+        { key: "Name", label: "Name" },
         { key: "Id", label: "Id" },
-        { key: "Args", label: "Args" },
-        { key: "State", label: "State", func: (item) => item['Status'] },
-        { key: "Driver", label: "Driver" },
-        { key: "LogPath", label: "LogPath" },
-        { key: "MountLabel", label: "MountLabel" },
-        { key: "Mounts", label: "Mounts" },
-        // { key: "Config", label: "Config" },
-        { key: "Created", label: "Created" },
-    ],
+        {
+            key: "Connect",
+            label: "Connect",
+            options: { width: '15rem' }
+        },
+    ]
 })
 
 export const imagesPullFields = ref({
@@ -394,15 +399,11 @@ export const imagesPullFields = ref({
     imagePullSearchButtonFields: {
         key: "Search",
         icon: "bi-search",
-        isSubmit: false,
-        isDisabled: false,
     },
 
     imagePullPullButtonFields: {
         key: "Pull",
         icon: "bi-arrow-down-square",
-        isSubmit: false,
-        isDisabled: false,
     }
 })
 
@@ -440,10 +441,10 @@ export const imagesListFields = ref({
     ]
 })
 
-export const imageInspectFields = ref({
-    imageInspectTemplateFields: {
+export const imageDetailFields = ref({
+    imageDetailTemplateFields: {
         icon: "bi-house",
-        title: "Image Inspect",
+        title: "Image Detail",
         tail: "",
     },
 })
@@ -470,10 +471,10 @@ export const networksMainFields = ref({
     ]
 })
 
-export const networkInspectFields = ref({
-    networkInspectTemplateFields: {
+export const networkDetailFields = ref({
+    networkDetailTemplateFields: {
         icon: "bi-house",
-        title: "Network Inspect",
+        title: "Network Detail",
         tail: "",
     },
 })
@@ -499,10 +500,10 @@ export const volumesMainFields = ref({
     ]
 })
 
-export const volumeInspectFields = ref({
-    volumeInspectTemplateFields: {
+export const volumeDetailFields = ref({
+    volumeDetailTemplateFields: {
         icon: "bi-house",
-        title: "Volume Inspect",
+        title: "Volume Detail",
         tail: "",
     },
 })

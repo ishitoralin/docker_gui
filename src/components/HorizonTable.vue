@@ -5,16 +5,22 @@
         <tr v-for="(item, index) in showItems" :key="index">
           <td>
             <slot
-              :name="`head(${item['swap'] || item['label']})`"
-              :row="{ key: item['key'], item: item, data: showItems }"
+              :name="`head(${item['swap'] || item['key']})`"
+              :item="item"
+              :index="index"
+              :data="showItems"
+              :value="item['label']"
             >
               {{ item["label"] || item["key"] }}
             </slot>
           </td>
           <td>
             <slot
-              :name="`cell(${item['swap']}||${item['label']})`"
-              :row="{ key: item['value'], item: item, data: showItems }"
+              :name="`cell(${item['swap'] || item['key']})`"
+              :item="item"
+              :index="index"
+              :data="showItems"
+              :value="item['value']"
             >
               {{ item["value"] }}
             </slot>

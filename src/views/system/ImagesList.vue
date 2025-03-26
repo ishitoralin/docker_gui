@@ -29,22 +29,22 @@
               />
             </div>
           </template>
-          <template #cell(Id)="{ item }">
+          <template #cell(Id)="{ item, key }">
             <router-link
               class="router-link-style"
-              :to="`/images/inspect/${item}`"
+              :to="`/images/detail/${item[key]}`"
             >
-              {{ handleTruncateString(item) }}
+              {{ handleTruncateString(item[key]) }}
             </router-link>
           </template>
-          <template #cell(RepoTags)="{ row }">
+          <template #cell(RepoTags)="{ item }">
             <div class="custom-tags-style-container">
               <span
                 class="custom-tags-style"
-                v-for="(item, index) in row['item']"
+                v-for="(value, index) in item['RepoTags']"
                 :key="index"
               >
-                {{ item }}
+                {{ value }}
               </span>
             </div>
           </template>

@@ -3,12 +3,14 @@
     <CompTemplate :fields="imagesPullFields['imagePullTemplateFields']">
       <template #body>
         <InputBox
+          class="mb-3"
           :fields="imagesPullFields['imagePullRegistryFields']"
           :items="registryItems"
           v-model:value="registryValue"
         ></InputBox>
 
         <InputBox
+          class="mb-3"
           :fields="imagesPullFields['imagePullInputBoxFields']"
           v-model:value="searchValue"
         ></InputBox>

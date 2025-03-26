@@ -4,9 +4,9 @@ export const handleGetHorizonTableItems = (fields, data) => {
         if (String(data[element["key"]])) {
             if (element["func"]) {
                 const newValue = element["func"](data[element["key"]])
-                result.push({ key: element["key"], label: element["label"], value: newValue })
+                result.push({ key: element["key"], swap: element["swap"], label: element["label"], value: newValue })
             } else {
-                result.push({ key: element["key"], label: element["label"], value: data[element["key"]] })
+                result.push({ key: element["key"], swap: element["swap"], label: element["label"], value: data[element["key"]] })
             }
             continue
         }
@@ -53,4 +53,10 @@ export const handleTruncateString = (string) => {
         return `${string.slice(0, 20)}...`;
     }
     return string;
+}
+
+export const handleDateTransform = (date) => {
+    const newDate = new Date(date)
+
+    return newDate
 }

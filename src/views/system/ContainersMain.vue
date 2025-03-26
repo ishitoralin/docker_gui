@@ -74,7 +74,6 @@ import { useRouter } from "vue-router";
 import DockerAPI from "@/models/dockerApi";
 import CompTemplate from "@/components/CompTemplate.vue";
 import VerticalTable from "@/components/VerticalTable.vue";
-import HorizonTable from "@/components/HorizonTable.vue";
 import PaginationComp from "@/components/PaginationComp.vue";
 import DropdownComp from "@/components/DropdownComp.vue";
 import AccordionCard from "@/components/AccordionCard.vue";
@@ -102,7 +101,7 @@ const tableOptions = ref({
 });
 
 const handleLinkClick = (id) => {
-  router.push(`/containers/inspect/${id}`);
+  router.push(`/containers/detail/${id}`);
 };
 
 const fetchList = async () => {

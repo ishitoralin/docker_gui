@@ -36,9 +36,9 @@ export const routes = [
         component: () => import("../views/system/ContainersMain.vue"),
       },
       {
-        path: '/containers/inspect/:id',
-        name: 'Container Inspect',
-        component: () => import("../views/system/ContainersInspect.vue"),
+        path: '/containers/detail/:id',
+        name: 'Container Detail',
+        component: () => import("../views/system/ContainersDetail.vue"),
       },
       {
         path: '/containers/logs/:id',
@@ -73,9 +73,9 @@ export const routes = [
         component: () => import("../views/system/ImagesMain.vue"),
       },
       {
-        path: '/images/inspect/:id',
-        name: 'Image Inspect',
-        component: () => import("../views/system/ImageInspect.vue"),
+        path: '/images/detail/:id',
+        name: 'Image Detail',
+        component: () => import("../views/system/ImageDetail.vue"),
       },
       {
         side: true,
@@ -85,9 +85,9 @@ export const routes = [
         component: () => import("../views/system/NetworksMain.vue"),
       },
       {
-        path: '/networks/inspect/:id',
-        name: 'Network Inspect',
-        component: () => import("../views/system/NetworkInspect.vue"),
+        path: '/networks/detail/:id',
+        name: 'Network Detail',
+        component: () => import("../views/system/NetworkDetail.vue"),
       },
       {
         side: true,
@@ -97,9 +97,9 @@ export const routes = [
         component: () => import("../views/system/VolumesMain.vue"),
       },
       {
-        path: '/volumes/inspect/:id',
-        name: 'Volume Inspect',
-        component: () => import("../views/system/VolumeInspect.vue"),
+        path: '/volumes/detail/:id',
+        name: 'Volume Detail',
+        component: () => import("../views/system/VolumeDetail.vue"),
       },
       {
         side: true,

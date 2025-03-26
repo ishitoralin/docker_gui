@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CompTemplate :fields="volumeInspectFields['volumeInspectTemplateFields']">
+    <CompTemplate :fields="volumeDetailFields['volumeDetailTemplateFields']">
       <template></template>
       <template #body>
         {{ route.params.id }}
@@ -17,7 +17,7 @@ import CompTemplate from "@/components/CompTemplate.vue";
 import VerticalTable from "@/components/VerticalTable.vue";
 import PaginationComp from "@/components/PaginationComp.vue";
 import DropdownComp from "@/components/DropdownComp.vue";
-import { volumeInspectFields } from "@/init/fields";
+import { volumeDetailFields } from "@/init/fields";
 import { handleGetVerticalTableItems } from "@/models/helper";
 const route = useRoute();
 const containerListTableItems = ref([]);
@@ -35,23 +35,23 @@ const containerListTableItems = ref([]);
 //   ],
 // });
 
-const fetchInspect = async () => {
+const fetchDetail = async () => {
   const options = {
     pathParams: {
       id: route.params.id,
     },
   };
-  const response = await DockerAPI("getImageInspect", options);
+  const response = await DockerAPI("getImageDetail", options);
   console.log(response.result);
   // containerListTableItems.value = handleGetVerticalTableItems(
-  //   containersInspectFields.value["containerListTableFields"],
+  //   containersDetailFields.value["containerListTableFields"],
   //   response.result
   // );
   // options.value["rows"] = containerListTableItems.value.length;
 };
 
 onMounted(() => {
-  fetchInspect();
+  fetchDetail();
 });
 </script>
 

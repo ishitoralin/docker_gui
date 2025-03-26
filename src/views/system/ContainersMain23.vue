@@ -15,7 +15,7 @@
           <template #cell(Id)="{ item }">
             <router-link
               class="router-link-style"
-              :to="`/containers/inspect/${item}`"
+              :to="`/containers/detail/${item}`"
             >
               {{ handleTruncateString(item) }}
             </router-link>

@@ -7,7 +7,10 @@
           <th v-for="(item, index) in fields" :key="index">
             <slot
               :name="`head(${item['key']})`"
-              :row="{ key: item['key'], item: item, data: showItems }"
+              :key="item['key']"
+              :item="item"
+              :index="index"
+              :data="showItems"
               >{{ item["label"] }}</slot
             >
           </th>
@@ -15,16 +18,17 @@
       </thead>
       <tbody>
         <tr v-for="(item, index) in showItems" :key="index">
-          <td v-for="(element, i) in fields" :key="i">
+          <td
+            v-for="(element, i) in fields"
+            :key="i"
+            :style="{ width: element.options?.width || '' }"
+          >
             <slot
               :name="`cell(${element['key']})`"
-              :item="item[element['key']]"
+              :key="element['key']"
+              :item="item"
               :index="index"
-              :row="{
-                key: element,
-                item: item[element['key']],
-                data: showItems,
-              }"
+              :data="showItems"
             >
               {{ item[element["key"]] }}
             </slot>

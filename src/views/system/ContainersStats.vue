@@ -1,7 +1,7 @@
 <template>
   <div>
     <CompTemplate
-      :fields="containersInspectFields['containerInspectTemplateFields']"
+      :fields="containersDetailFields['containerDetailTemplateFields']"
     >
       <template></template>
       <template #body>
@@ -10,8 +10,8 @@
       <template #foot>
         <div class="custon-button-group">
           <SingleButton
-            v-for="(item, index) in containersInspectFields[
-              'containerInspectButtonGroupFields'
+            v-for="(item, index) in containersDetailFields[
+              'containerDetailButtonGroupFields'
             ]"
             :key="index"
             :fields="item"
@@ -31,17 +31,17 @@ import VerticalTable from "@/components/VerticalTable.vue";
 import PaginationComp from "@/components/PaginationComp.vue";
 import DropdownComp from "@/components/DropdownComp.vue";
 import SingleButton from "@/components/SingleButton.vue";
-import { containersInspectFields } from "@/init/fields";
+import { containersDetailFields } from "@/init/fields";
 import { handleGetVerticalTableItems } from "@/models/helper";
 const route = useRoute();
 
-const fetchInspect = async () => {
+const fetchDetail = async () => {
   const options = {
     pathParams: {
       id: route.params.id,
     },
   };
-  const response = await DockerAPI("getContainerInspect", options);
+  const response = await DockerAPI("getContainerDetail", options);
 };
 
 const handleAction = (action) => {
@@ -59,7 +59,7 @@ const fetchAction = async (action) => {
 };
 
 onMounted(() => {
-  fetchInspect();
+  fetchDetail();
 });
 </script>
 

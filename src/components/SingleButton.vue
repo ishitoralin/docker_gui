@@ -12,7 +12,7 @@
       },
     ]"
     :style="{ width: fields['width'] || '4.5rem' }"
-    :disabled="fields['isDisabled']"
+    :disabled="disabled"
   >
     <i v-if="fields['icon']" :class="['bi', fields['icon']]"></i>
     {{ fields["title"] || fields["key"] }}
@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, defineModel } from "vue";
 import DockerAPI from "@/models/dockerApi";
 import CompTemplate from "@/components/CompTemplate.vue";
 import InputBox from "@/components/InputBox.vue";
@@ -37,6 +37,11 @@ const props = defineProps({
       };
     },
   },
+});
+
+const disabled = defineModel("disabled", {
+  type: Boolean,
+  default: () => false,
 });
 </script>
 <style scoped>
